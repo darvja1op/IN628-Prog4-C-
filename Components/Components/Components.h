@@ -219,6 +219,7 @@ namespace Components {
 	{
 				 count = 0;
 				 isOn = false;
+				 picDragon->Image = Image::FromFile("C:\\Users\\Jared\\Desktop\\dragons\\Dragon1.bmp");
 	}
 			 //Task 1
 	private: System::Void btnGrow_Click(System::Object^  sender, System::EventArgs^  e)
@@ -267,15 +268,15 @@ namespace Components {
 					 }
 				 }
 	}
+			 //Task 6
 	private: System::Void btnAnimate_Click(System::Object^  sender, System::EventArgs^  e)
 	{
-				 picDragon->Image = Image::FromFile("C:\\Users\\Jared\\Desktop\\dragons\\Dragon1.bmp");
 				 for (int i = 1; i < 10; i++)
 				 {
 					 System::Threading::Thread::Sleep(100);
 					 Application::DoEvents();
-					 picDragon->Image = Image::FromFile("C:\\Users\\Jared\\Desktop\\dragons\\Dragon"+i+".bmp");
+					 picDragon->Image = Image::FromFile("C:\\Users\\Jared\\Desktop\\dragons\\Dragon" + i + ".bmp");
 				 }
 	}
-};
+	};
 }
