@@ -52,6 +52,9 @@ namespace Components {
 	private: System::Windows::Forms::Button^  btnMoveBox;
 	private: System::Windows::Forms::TextBox^  txtMoveBox;
 	private: System::Windows::Forms::PictureBox^  picBox;
+	private: System::Windows::Forms::PictureBox^  picDragon;
+
+	private: System::Windows::Forms::Button^  btnAnimate;
 
 
 
@@ -73,7 +76,10 @@ namespace Components {
 				 this->btnMoveBox = (gcnew System::Windows::Forms::Button());
 				 this->txtMoveBox = (gcnew System::Windows::Forms::TextBox());
 				 this->picBox = (gcnew System::Windows::Forms::PictureBox());
+				 this->picDragon = (gcnew System::Windows::Forms::PictureBox());
+				 this->btnAnimate = (gcnew System::Windows::Forms::Button());
 				 (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->picBox))->BeginInit();
+				 (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->picDragon))->BeginInit();
 				 this->SuspendLayout();
 				 // 
 				 // btnGrow
@@ -164,11 +170,31 @@ namespace Components {
 				 this->picBox->TabIndex = 8;
 				 this->picBox->TabStop = false;
 				 // 
+				 // picDragon
+				 // 
+				 this->picDragon->Location = System::Drawing::Point(169, 371);
+				 this->picDragon->Name = L"picDragon";
+				 this->picDragon->Size = System::Drawing::Size(202, 163);
+				 this->picDragon->TabIndex = 9;
+				 this->picDragon->TabStop = false;
+				 // 
+				 // btnAnimate
+				 // 
+				 this->btnAnimate->Location = System::Drawing::Point(29, 380);
+				 this->btnAnimate->Name = L"btnAnimate";
+				 this->btnAnimate->Size = System::Drawing::Size(75, 23);
+				 this->btnAnimate->TabIndex = 10;
+				 this->btnAnimate->Text = L"Animate!";
+				 this->btnAnimate->UseVisualStyleBackColor = true;
+				 this->btnAnimate->Click += gcnew System::EventHandler(this, &Components::btnAnimate_Click);
+				 // 
 				 // Components
 				 // 
 				 this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 				 this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 				 this->ClientSize = System::Drawing::Size(449, 779);
+				 this->Controls->Add(this->btnAnimate);
+				 this->Controls->Add(this->picDragon);
 				 this->Controls->Add(this->picBox);
 				 this->Controls->Add(this->txtMoveBox);
 				 this->Controls->Add(this->btnMoveBox);
@@ -183,6 +209,7 @@ namespace Components {
 				 this->Text = L"Components";
 				 this->Load += gcnew System::EventHandler(this, &Components::Components_Load);
 				 (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->picBox))->EndInit();
+				 (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->picDragon))->EndInit();
 				 this->ResumeLayout(false);
 				 this->PerformLayout();
 
@@ -240,5 +267,15 @@ namespace Components {
 					 }
 				 }
 	}
-	};
+	private: System::Void btnAnimate_Click(System::Object^  sender, System::EventArgs^  e)
+	{
+				 picDragon->Image = Image::FromFile("C:\\Users\\Jared\\Desktop\\dragons\\Dragon1.bmp");
+				 for (int i = 1; i < 10; i++)
+				 {
+					 System::Threading::Thread::Sleep(100);
+					 Application::DoEvents();
+					 picDragon->Image = Image::FromFile("C:\\Users\\Jared\\Desktop\\dragons\\Dragon"+i+".bmp");
+				 }
+	}
+};
 }
