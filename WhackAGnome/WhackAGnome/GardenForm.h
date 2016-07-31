@@ -91,12 +91,14 @@ namespace WhackAGnome {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->BackColor = System::Drawing::Color::LightGreen;
 			this->ClientSize = System::Drawing::Size(732, 703);
 			this->Controls->Add(this->lblScore);
 			this->Controls->Add(this->btnStart);
 			this->Name = L"GardenForm";
 			this->Text = L"GardenForm";
 			this->Load += gcnew System::EventHandler(this, &GardenForm::GardenForm_Load);
+			this->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &GardenForm::GardenForm_MouseDown);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -150,7 +152,7 @@ namespace WhackAGnome {
 	private: System::Void btnStart_Click(System::Object^  sender, System::EventArgs^  e) 
 	{
 				 gnomeFamily->resetAllGnomes();
-				 lblScore->Text += "Score: 0";
+				 lblScore->Text = "Score: 0";
 				 timer1->Enabled = true;
 	}
 	private: System::Void GardenForm_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e)

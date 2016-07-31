@@ -17,7 +17,7 @@ void Gnome::draw()
 
 void Gnome::erase()
 {
-	Brush^ brush = gcnew SolidBrush(Color::White);
+	Brush^ brush = gcnew SolidBrush(Color::LightGreen);
 	canvas->FillRectangle(brush, xPos, yPos, image->Width, image->Height);
 }
 
