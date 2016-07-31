@@ -45,7 +45,9 @@ namespace WhackAGnome {
 		Graphics^ mainCanvas;
 		GnomeFamily^ gnomeFamily;
 		int gnomeIndex;
-		int hamsterCount;
+	private: System::Windows::Forms::Button^  btnStart;
+	private: System::Windows::Forms::Label^  lblScore;
+			 int hamsterCount;
 
 
 #pragma region Windows Form Designer generated code
@@ -57,6 +59,8 @@ namespace WhackAGnome {
 		{
 			this->components = (gcnew System::ComponentModel::Container());
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
+			this->btnStart = (gcnew System::Windows::Forms::Button());
+			this->lblScore = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
 			// timer1
@@ -64,15 +68,37 @@ namespace WhackAGnome {
 			this->timer1->Interval = 750;
 			this->timer1->Tick += gcnew System::EventHandler(this, &GardenForm::timer1_Tick);
 			// 
+			// btnStart
+			// 
+			this->btnStart->Location = System::Drawing::Point(13, 13);
+			this->btnStart->Name = L"btnStart";
+			this->btnStart->Size = System::Drawing::Size(75, 23);
+			this->btnStart->TabIndex = 0;
+			this->btnStart->Text = L"Start!";
+			this->btnStart->UseVisualStyleBackColor = true;
+			this->btnStart->Click += gcnew System::EventHandler(this, &GardenForm::btnStart_Click);
+			// 
+			// lblScore
+			// 
+			this->lblScore->AutoSize = true;
+			this->lblScore->Location = System::Drawing::Point(119, 18);
+			this->lblScore->Name = L"lblScore";
+			this->lblScore->Size = System::Drawing::Size(53, 17);
+			this->lblScore->TabIndex = 1;
+			this->lblScore->Text = L"Score: ";
+			// 
 			// GardenForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(794, 517);
+			this->Controls->Add(this->lblScore);
+			this->Controls->Add(this->btnStart);
 			this->Name = L"GardenForm";
 			this->Text = L"GardenForm";
 			this->Load += gcnew System::EventHandler(this, &GardenForm::GardenForm_Load);
 			this->ResumeLayout(false);
+			this->PerformLayout();
 
 		}
 #pragma endregion
@@ -80,14 +106,49 @@ namespace WhackAGnome {
 	{
 				 //initialise variables
 				 hamsterCount = 0;
-				 gnomeIndex = 10;
+				 gnomeIndex = 0;
 
 				 rGen = gcnew Random;
-				 gnomeFamily = gcnew GnomeFamily(rGen, mainCanvas, gnomeIndex);
+				 gnomeFamily = gcnew GnomeFamily(rGen, mainCanvas, 10);
 	}
 	private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e) 
 	{
+				 gnomeFamily->eraseOneGnome(gnomeIndex);
+
+				 for (int i = 0; i < gnomeFamily->getNGnomes; i++)
+				 {
+					 if (gnomeFamily->isHamster(i))
+					 {
+						 gnomeFamily->drawOneGnome(i);
+					 }
+				 }
+
+				 gnomeIndex = rGen->Next(gnomeFamily->getNGnomes);
+
+				 gnomeFamily->drawOneGnome(gnomeIndex);
+
+				 if (hamsterCount == gnomeFamily->getNGnomes)
+				 {
+					 timer1->Enabled = false;
+					 MessageBox::Show("You win!");
+				 }
 	}
 	
+	private: System::Void btnStart_Click(System::Object^  sender, System::EventArgs^  e) 
+	{
+				 gnomeFamily->resetAllGnomes();
+				 lblScore->Text += "Score: 0";
+				 timer1->Enabled = true;
+	}
+	private: System::Void GardenForm_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e)
+	{
+				 bool hitAGnome = gnomeFamily->hitGnome(gnomeIndex, e->X, e->Y);
+				 if (hitAGnome)
+				 {
+					 gnomeFamily->changeGnomeImage(gnomeIndex, "hamster.jpg");
+					 gnomeFamily->setToHamster(gnomeIndex);
+					 hamsterCount++;
+				 }
+	}
 	};
 }
