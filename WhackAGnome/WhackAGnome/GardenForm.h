@@ -91,7 +91,7 @@ namespace WhackAGnome {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(794, 517);
+			this->ClientSize = System::Drawing::Size(732, 703);
 			this->Controls->Add(this->lblScore);
 			this->Controls->Add(this->btnStart);
 			this->Name = L"GardenForm";
@@ -115,7 +115,7 @@ namespace WhackAGnome {
 	{
 				 gnomeFamily->eraseOneGnome(gnomeIndex);
 
-				 for (int i = 0; i < gnomeFamily->getNGnomes; i++)
+				 for (int i = 0; i < gnomeFamily->getNGnomes(); i++)
 				 {
 					 if (gnomeFamily->isHamster(i))
 					 {
@@ -123,11 +123,11 @@ namespace WhackAGnome {
 					 }
 				 }
 
-				 gnomeIndex = rGen->Next(gnomeFamily->getNGnomes);
+				 gnomeIndex = rGen->Next(gnomeFamily->getNGnomes());
 
 				 gnomeFamily->drawOneGnome(gnomeIndex);
 
-				 if (hamsterCount == gnomeFamily->getNGnomes)
+				 if (hamsterCount == gnomeFamily->getNGnomes())
 				 {
 					 timer1->Enabled = false;
 					 MessageBox::Show("You win!");
@@ -145,7 +145,7 @@ namespace WhackAGnome {
 				 bool hitAGnome = gnomeFamily->hitGnome(gnomeIndex, e->X, e->Y);
 				 if (hitAGnome)
 				 {
-					 gnomeFamily->changeGnomeImage(gnomeIndex, "hamster.jpg");
+					 gnomeFamily->changeGnomeImage(gnomeIndex, "images\\hamster.jpg");
 					 gnomeFamily->setToHamster(gnomeIndex);
 					 hamsterCount++;
 				 }

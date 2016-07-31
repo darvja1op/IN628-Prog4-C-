@@ -80,12 +80,19 @@
   <ItemGroup>
     <ClCompile Include="GardenForm.cpp" />
     <ClCompile Include="Gnome.cpp" />
+    <ClCompile Include="GnomeFamily.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GardenForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="Gnome.h" />
+    <ClInclude Include="GnomeFamily.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="GardenForm.resx">
+      <DependentUpon>GardenForm.h</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

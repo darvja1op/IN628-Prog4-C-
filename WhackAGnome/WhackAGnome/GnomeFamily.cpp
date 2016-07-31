@@ -10,8 +10,8 @@ GnomeFamily::GnomeFamily(Random^ startRandom, Graphics^ startCanvas, int startNG
 
 	for (int i = 0; i < nGnomes; i++)
 	{
-		int newX = rGen->Next(10, 750);
-		int newY = rGen->Next(10, 550);
+		int newX = rGen->Next(100, 700);
+		int newY = rGen->Next(100, 700);
 		gnomeArray[i] = gcnew Gnome(canvas, newX, newY);
 	}
 }
@@ -63,6 +63,6 @@ void GnomeFamily::resetAllGnomes()
 	{
 		gnomeArray[i]->setIsHamster(false);
 		gnomeArray[i]->erase();
-		gnomeArray[i]->changeImage("gnome.jpg");
+		gnomeArray[i]->changeImage("images\\gnome.jpg");
 	}
 }

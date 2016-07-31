@@ -7,7 +7,7 @@ Gnome::Gnome(Graphics^ startCanvas, int startXPos, int startYPos)
 	xPos = startXPos;
 	yPos = startYPos;
 	isHamster = false;
-	image = Image::FromFile("gnome.jpg");
+	image = Image::FromFile("images\\gnome.jpg");
 }
 
 void Gnome::draw()
