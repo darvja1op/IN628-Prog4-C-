@@ -109,6 +109,7 @@ namespace WhackAGnome {
 				 gnomeIndex = 0;
 
 				 rGen = gcnew Random;
+				 mainCanvas = CreateGraphics();
 				 gnomeFamily = gcnew GnomeFamily(rGen, mainCanvas, 10);
 	}
 	private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e) 
