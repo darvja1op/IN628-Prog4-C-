@@ -17,8 +17,8 @@ void Gnome::draw()
 
 void Gnome::erase()
 {
-	Pen^ pen = gcnew Pen(Color::White);
-	canvas->DrawRectangle(pen, xPos, yPos, image->Width, image->Height);
+	Brush^ brush = gcnew SolidBrush(Color::White);
+	canvas->FillRectangle(brush, xPos, yPos, image->Width, image->Height);
 }
 
 bool Gnome::pointInGnome(int x, int y)

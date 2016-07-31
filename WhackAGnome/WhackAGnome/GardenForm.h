@@ -65,7 +65,7 @@ namespace WhackAGnome {
 			// 
 			// timer1
 			// 
-			this->timer1->Interval = 750;
+			this->timer1->Interval = 1000;
 			this->timer1->Tick += gcnew System::EventHandler(this, &GardenForm::timer1_Tick);
 			// 
 			// btnStart
@@ -104,6 +104,10 @@ namespace WhackAGnome {
 #pragma endregion
 	private: System::Void GardenForm_Load(System::Object^  sender, System::EventArgs^  e)
 	{
+				 //set Window
+				 Width = 750;
+				 Height = 750;
+
 				 //initialise variables
 				 hamsterCount = 0;
 				 gnomeIndex = 0;
@@ -114,8 +118,15 @@ namespace WhackAGnome {
 	}
 	private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e) 
 	{
-				 gnomeFamily->eraseOneGnome(gnomeIndex);
+				 lblScore->Text = "Score: " + hamsterCount;
 
+				 //hide previous gnome if not a hamster
+				 if (!gnomeFamily->isHamster(gnomeIndex))
+				 {
+					 gnomeFamily->eraseOneGnome(gnomeIndex);
+				 }				 
+
+				 //draw hamsters
 				 for (int i = 0; i < gnomeFamily->getNGnomes(); i++)
 				 {
 					 if (gnomeFamily->isHamster(i))
@@ -124,10 +135,11 @@ namespace WhackAGnome {
 					 }
 				 }
 
+				 //pick next gnome and draw
 				 gnomeIndex = rGen->Next(gnomeFamily->getNGnomes());
-
 				 gnomeFamily->drawOneGnome(gnomeIndex);
 
+				 //test for game over
 				 if (hamsterCount == gnomeFamily->getNGnomes())
 				 {
 					 timer1->Enabled = false;
