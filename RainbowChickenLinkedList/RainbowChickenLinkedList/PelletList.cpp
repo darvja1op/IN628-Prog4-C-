@@ -40,11 +40,21 @@ void PelletList::deleteOnePellet(Pellet^ pelletToDelete)
 	else
 	{
 		//find previous and swoop
+		Pellet^ pelletWalker;
+		pelletWalker = head;
+
+		while (pelletWalker->Next != pelletToDelete)
+		{
+			pelletWalker = pelletWalker->Next;
+		}
+		
+		pelletWalker->Next = pelletToDelete->Next;
 
 		//if deleted last in list
-		if (tail == pelletToDelete)
+		if (pelletWalker->Next == nullptr)
 		{
 			//set tail to point to previous node
+			tail = pelletWalker;
 		}
 	}
 }
@@ -66,6 +76,14 @@ void PelletList::drawPellets()
 
 int PelletList::countPellets()
 {
+	Pellet^ pelletWalker;
 
+	int count = 0;
+	while (pelletWalker != nullptr)
+	{
+		count++;
+		pelletWalker = pelletWalker->Next;
+	}
+	return count;
 }
 
