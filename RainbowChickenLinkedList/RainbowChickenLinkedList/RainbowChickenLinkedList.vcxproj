@@ -56,6 +56,8 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies />
+      <SubSystem>Windows</SubSystem>
+      <EntryPointSymbol>Main</EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -77,11 +79,20 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DanceFloor.cpp" />
+    <ClCompile Include="Pellet.cpp" />
+    <ClCompile Include="PelletList.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DanceFloor.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="Pellet.h" />
+    <ClInclude Include="PelletList.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DanceFloor.resx">
+      <DependentUpon>DanceFloor.h</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

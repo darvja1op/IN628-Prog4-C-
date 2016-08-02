@@ -3,6 +3,8 @@
 
 PelletList::PelletList()
 {
+	head = nullptr;
+	tail = nullptr;
 }
 
 void PelletList::addPellet(Pellet^ newPellet)

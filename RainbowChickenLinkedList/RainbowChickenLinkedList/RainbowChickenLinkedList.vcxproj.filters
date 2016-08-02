@@ -18,9 +18,21 @@
     <ClCompile Include="DanceFloor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Pellet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PelletList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DanceFloor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Pellet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PelletList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -44,9 +44,10 @@ namespace RainbowChickenLinkedList {
 	private: System::ComponentModel::IContainer^  components;
 
 	private:
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
+		PelletList^ pelletList;
+		SolidBrush^ brush;
+		Random^ rGen;
+		Graphics^ canvas;
 
 
 #pragma region Windows Form Designer generated code
@@ -103,12 +104,33 @@ namespace RainbowChickenLinkedList {
 #pragma endregion
 	private: System::Void DanceFloor_Load(System::Object^  sender, System::EventArgs^  e) 
 	{
+				 rGen = gcnew Random();
+				 canvas = CreateGraphics();
+				 pelletList = gcnew PelletList();
+				 brush = gcnew SolidBrush(Color::Black);
 	}
 	private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e) 
 	{
+				 pelletList->movePellets();
+				 pelletList->deleteAllDeadPellets();
+				 pelletList->drawPellets();
+				 lblScore->Text = Convert::ToString(pelletList->countPellets());
 	}
 	private: System::Void DanceFloor_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) 
 	{
+				 if (e->KeyData == Keys::Left)
+				 {
+					 picChicken->Left += 15;
+				 }
+				 if (e->KeyData == Keys::Right)
+				 {
+					 picChicken->Left -= 15;
+				 }
+				 if (e->KeyData == Keys::Space)
+				 {
+					 Pellet^ newPellet = gcnew Pellet(picChicken->Left,picChicken->Left,canvas,rGen);
+					 pelletList->addPellet(newPellet);
+				 }
 	}
 	};
 }
