@@ -37,12 +37,17 @@ namespace RainbowChickenLinkedList {
 				delete components;
 			}
 		}
+	private: System::Windows::Forms::Label^  lblScore;
+	protected:
+	private: System::Windows::Forms::PictureBox^  picChicken;
+	private: System::Windows::Forms::Timer^  timer1;
+	private: System::ComponentModel::IContainer^  components;
 
 	private:
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -51,21 +56,58 @@ namespace RainbowChickenLinkedList {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			this->components = (gcnew System::ComponentModel::Container());
+			this->lblScore = (gcnew System::Windows::Forms::Label());
+			this->picChicken = (gcnew System::Windows::Forms::PictureBox());
+			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->picChicken))->BeginInit();
 			this->SuspendLayout();
+			// 
+			// lblScore
+			// 
+			this->lblScore->AutoSize = true;
+			this->lblScore->Location = System::Drawing::Point(13, 13);
+			this->lblScore->Name = L"lblScore";
+			this->lblScore->Size = System::Drawing::Size(16, 17);
+			this->lblScore->TabIndex = 0;
+			this->lblScore->Text = L"0";
+			// 
+			// picChicken
+			// 
+			this->picChicken->Location = System::Drawing::Point(302, 458);
+			this->picChicken->Name = L"picChicken";
+			this->picChicken->Size = System::Drawing::Size(69, 50);
+			this->picChicken->TabIndex = 1;
+			this->picChicken->TabStop = false;
+			// 
+			// timer1
+			// 
+			this->timer1->Tick += gcnew System::EventHandler(this, &DanceFloor::timer1_Tick);
 			// 
 			// DanceFloor
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(282, 253);
+			this->ClientSize = System::Drawing::Size(638, 531);
+			this->Controls->Add(this->picChicken);
+			this->Controls->Add(this->lblScore);
 			this->Name = L"DanceFloor";
 			this->Text = L"DanceFloor";
 			this->Load += gcnew System::EventHandler(this, &DanceFloor::DanceFloor_Load);
+			this->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &DanceFloor::DanceFloor_KeyDown);
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->picChicken))->EndInit();
 			this->ResumeLayout(false);
+			this->PerformLayout();
 
 		}
 #pragma endregion
 	private: System::Void DanceFloor_Load(System::Object^  sender, System::EventArgs^  e) 
+	{
+	}
+	private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e) 
+	{
+	}
+	private: System::Void DanceFloor_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) 
 	{
 	}
 	};

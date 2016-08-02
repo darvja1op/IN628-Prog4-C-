@@ -61,17 +61,41 @@ void PelletList::deleteOnePellet(Pellet^ pelletToDelete)
 
 void PelletList::deleteAllDeadPellets()
 {
+	Pellet^ pelletWalker;
 
+	while (pelletWalker != nullptr)
+	{
+		//delete pellet if dead
+		if (!pelletWalker->IsAlive)
+		{
+			deleteOnePellet(pelletWalker);
+		}
+		pelletWalker = pelletWalker->Next;
+	}
 }
 
 void PelletList::movePellets()
 {
+	Pellet^ pelletWalker;
 
+	while (pelletWalker != nullptr)
+	{
+		//move pellet
+		pelletWalker->move();
+		pelletWalker = pelletWalker->Next;
+	}
 }
 
 void PelletList::drawPellets()
 {
+	Pellet^ pelletWalker;
 
+	while (pelletWalker != nullptr)
+	{
+		//draw pellet
+		pelletWalker->draw();
+		pelletWalker = pelletWalker->Next;
+	}
 }
 
 int PelletList::countPellets()
