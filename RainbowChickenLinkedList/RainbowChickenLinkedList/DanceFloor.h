@@ -134,7 +134,7 @@ namespace RainbowChickenLinkedList {
 				 if (e->KeyData == Keys::Space)
 				 {
 					 Point location = picChicken->Location;
-					 int currentX = location.X;
+					 int currentX = location.X + (picChicken->Width/2);
 					 int currentY = location.Y;
 					 Pellet^ newPellet = gcnew Pellet(currentX,currentY,canvas,rGen);
 					 pelletList->addPellet(newPellet);

@@ -8,11 +8,41 @@ Pellet::Pellet(int startXPos, int startYPos, Graphics^ startCanvas, Random^ star
 	canvas = startCanvas;
 	rGen = startRGen;
 	diameter = 10;
-	brush = gcnew SolidBrush(Color::White);
+
+	int colourSwitch = rGen->Next(5);
+
+	switch (colourSwitch)
+	{
+	default:
+		brush = gcnew SolidBrush(Color::White);
+		break;
+	case 0:
+		brush = gcnew SolidBrush(Color::Green);
+		break;
+	case 1:
+		brush = gcnew SolidBrush(Color::Red);
+		break;
+	case 2:
+		brush = gcnew SolidBrush(Color::Pink);
+		break;
+	case 3:
+		brush = gcnew SolidBrush(Color::Blue);
+		break;
+	case 4:
+		brush = gcnew SolidBrush(Color::Yellow);
+		break;
+	}
 	eraseBrush = gcnew SolidBrush(Color::Black);
 
-	yVel = rGen->Next(1,20);
-	//xVel = rGen->Next(10);
+	yVel = rGen->Next(10,20);
+	xVel = rGen->Next(4);
+
+	int posNeg = rGen->Next(2);
+	if (posNeg == 0)
+	{
+		xVel *= -1;
+	}
+
 	IsAlive = true;
 }
 
@@ -23,7 +53,7 @@ void Pellet::draw()
 
 void Pellet::move()
 {
-	//xPos -= xVel;
+	xPos -= xVel;
 	yPos -= yVel;
 
 	if (yPos <= 0)
