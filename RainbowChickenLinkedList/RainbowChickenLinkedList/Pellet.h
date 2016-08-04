@@ -18,6 +18,7 @@ private:
 	Color pelletColour;
 	Graphics^ canvas;
 	Brush^ brush;
+	Brush^ eraseBrush;
 	Random^ rGen;
 public:
 	Pellet^ Next;
@@ -27,6 +28,7 @@ public:
 
 	void draw();
 	void move();
+	void erase();
 
 	int getYPos()		{ return yPos; }
 };

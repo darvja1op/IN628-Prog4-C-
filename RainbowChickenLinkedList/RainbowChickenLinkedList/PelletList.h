@@ -15,5 +15,6 @@ public:
 	void movePellets();
 	void drawPellets();
 	int countPellets();
+	void erasePellets();
 };
 

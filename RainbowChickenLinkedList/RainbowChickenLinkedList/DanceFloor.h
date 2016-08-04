@@ -45,7 +45,6 @@ namespace RainbowChickenLinkedList {
 
 	private:
 		PelletList^ pelletList;
-		SolidBrush^ brush;
 		Random^ rGen;
 		Graphics^ canvas;
 
@@ -67,6 +66,7 @@ namespace RainbowChickenLinkedList {
 			// lblScore
 			// 
 			this->lblScore->AutoSize = true;
+			this->lblScore->ForeColor = System::Drawing::SystemColors::ControlLightLight;
 			this->lblScore->Location = System::Drawing::Point(13, 13);
 			this->lblScore->Name = L"lblScore";
 			this->lblScore->Size = System::Drawing::Size(16, 17);
@@ -89,6 +89,7 @@ namespace RainbowChickenLinkedList {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->BackColor = System::Drawing::Color::Black;
 			this->ClientSize = System::Drawing::Size(638, 531);
 			this->Controls->Add(this->picChicken);
 			this->Controls->Add(this->lblScore);
@@ -103,32 +104,39 @@ namespace RainbowChickenLinkedList {
 		}
 #pragma endregion
 	private: System::Void DanceFloor_Load(System::Object^  sender, System::EventArgs^  e) 
-	{
+	{				 
 				 rGen = gcnew Random();
 				 canvas = CreateGraphics();
 				 pelletList = gcnew PelletList();
-				 brush = gcnew SolidBrush(Color::Black);
+				 
+				 picChicken->Image = Image::FromFile("chicken.gif");
+				 timer1->Enabled = true;
 	}
 	private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e) 
 	{
+				 pelletList->erasePellets();
 				 pelletList->movePellets();
 				 pelletList->deleteAllDeadPellets();
-				 pelletList->drawPellets();
+				 pelletList->drawPellets();				 
+				 
 				 lblScore->Text = Convert::ToString(pelletList->countPellets());
 	}
 	private: System::Void DanceFloor_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) 
 	{
 				 if (e->KeyData == Keys::Left)
 				 {
-					 picChicken->Left += 15;
+					 picChicken->Left -= 15;
 				 }
 				 if (e->KeyData == Keys::Right)
 				 {
-					 picChicken->Left -= 15;
+					 picChicken->Left += 15;
 				 }
 				 if (e->KeyData == Keys::Space)
 				 {
-					 Pellet^ newPellet = gcnew Pellet(picChicken->Left,picChicken->Left,canvas,rGen);
+					 Point location = picChicken->Location;
+					 int currentX = location.X;
+					 int currentY = location.Y;
+					 Pellet^ newPellet = gcnew Pellet(currentX,currentY,canvas,rGen);
 					 pelletList->addPellet(newPellet);
 				 }
 	}
