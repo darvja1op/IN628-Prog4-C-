@@ -45,7 +45,9 @@ namespace SpriteAnimation {
 	private:
 		SpriteList^ spriteList;
 		Graphics^ canvas;
-		Random^ rGen;
+		const int NUM_FRAMES = 8;
+	private: System::Windows::Forms::Timer^  timer2;
+			 Random^ rGen;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -57,10 +59,12 @@ namespace SpriteAnimation {
 			this->components = (gcnew System::ComponentModel::Container());
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->btnStart = (gcnew System::Windows::Forms::Button());
+			this->timer2 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->SuspendLayout();
 			// 
 			// timer1
 			// 
+			this->timer1->Interval = 4000;
 			this->timer1->Tick += gcnew System::EventHandler(this, &Form1::timer1_Tick);
 			// 
 			// btnStart
@@ -72,6 +76,10 @@ namespace SpriteAnimation {
 			this->btnStart->Text = L"Start!";
 			this->btnStart->UseVisualStyleBackColor = true;
 			this->btnStart->Click += gcnew System::EventHandler(this, &Form1::btnStart_Click);
+			// 
+			// timer2
+			// 
+			this->timer2->Tick += gcnew System::EventHandler(this, &Form1::timer2_Tick);
 			// 
 			// Form1
 			// 
@@ -92,16 +100,23 @@ namespace SpriteAnimation {
 				 canvas = CreateGraphics();
 				 rGen = gcnew Random();
 				 spriteList = gcnew SpriteList();
-
-				
 	}
 	private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e) 
 	{
-
+				 Sprite^ newSprite = gcnew Sprite(canvas, "images\\BlobboMulti.bmp", rGen, NUM_FRAMES);
+				 spriteList->addSprite(newSprite);
 	}
 	private: System::Void btnStart_Click(System::Object^  sender, System::EventArgs^  e) 
 	{
 				 timer1->Enabled = true;
+				 timer2->Enabled = true;
+	}
+	private: System::Void timer2_Tick(System::Object^  sender, System::EventArgs^  e) 
+	{
+				 spriteList->eraseSprites();
+				 spriteList->wanderSprites();
+				 spriteList->moveSprites();
+				 spriteList->drawSprites();
 	}
 	};
 }
