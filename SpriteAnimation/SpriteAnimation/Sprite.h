@@ -24,7 +24,7 @@ public:
 	Sprite^ Next;
 
 public:
-	Sprite(Graphics^ startCanvas, Bitmap^ startSpriteSheet, Random^ startRGen, int startNFrames);
+	Sprite(Graphics^ startCanvas, String^ startSpriteSheet, Random^ startRGen, int startNFrames);
 	void draw();
 	void move();
 	void wander();

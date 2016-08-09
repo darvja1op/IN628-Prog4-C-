@@ -1,5 +1,8 @@
 #pragma once
 
+#include "SpriteList.h"
+#include "Sprite.h"
+
 namespace SpriteAnimation {
 
 	using namespace System;
@@ -35,14 +38,14 @@ namespace SpriteAnimation {
 			}
 		}
 	private: System::Windows::Forms::Timer^  timer1;
+	private: System::Windows::Forms::Button^  btnStart;
 	protected:
 	private: System::ComponentModel::IContainer^  components;
 
 	private:
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
-
+		SpriteList^ spriteList;
+		Graphics^ canvas;
+		Random^ rGen;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -53,11 +56,22 @@ namespace SpriteAnimation {
 		{
 			this->components = (gcnew System::ComponentModel::Container());
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
+			this->btnStart = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
 			// timer1
 			// 
 			this->timer1->Tick += gcnew System::EventHandler(this, &Form1::timer1_Tick);
+			// 
+			// btnStart
+			// 
+			this->btnStart->Location = System::Drawing::Point(13, 13);
+			this->btnStart->Name = L"btnStart";
+			this->btnStart->Size = System::Drawing::Size(75, 23);
+			this->btnStart->TabIndex = 0;
+			this->btnStart->Text = L"Start!";
+			this->btnStart->UseVisualStyleBackColor = true;
+			this->btnStart->Click += gcnew System::EventHandler(this, &Form1::btnStart_Click);
 			// 
 			// Form1
 			// 
@@ -65,6 +79,7 @@ namespace SpriteAnimation {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::Color::Black;
 			this->ClientSize = System::Drawing::Size(710, 505);
+			this->Controls->Add(this->btnStart);
 			this->Name = L"Form1";
 			this->Text = L"Form1";
 			this->Load += gcnew System::EventHandler(this, &Form1::Form1_Load);
@@ -74,9 +89,19 @@ namespace SpriteAnimation {
 #pragma endregion
 	private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e) 
 	{
+				 canvas = CreateGraphics();
+				 rGen = gcnew Random();
+				 spriteList = gcnew SpriteList();
+
+				
 	}
 	private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e) 
 	{
+
+	}
+	private: System::Void btnStart_Click(System::Object^  sender, System::EventArgs^  e) 
+	{
+				 timer1->Enabled = true;
 	}
 	};
 }
