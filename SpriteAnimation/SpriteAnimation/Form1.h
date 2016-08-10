@@ -100,6 +100,11 @@ namespace SpriteAnimation {
 				 canvas = CreateGraphics();
 				 rGen = gcnew Random();
 				 spriteList = gcnew SpriteList();
+
+				 this->Width = 1900;
+				 this->Height = 800;
+				 this->Left = 0;
+				 this->Top = 0;
 	}
 	private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e) 
 	{
@@ -108,6 +113,8 @@ namespace SpriteAnimation {
 	}
 	private: System::Void btnStart_Click(System::Object^  sender, System::EventArgs^  e) 
 	{
+				 Sprite^ newSprite = gcnew Sprite(canvas, "images\\BlobboMulti.bmp", rGen, NUM_FRAMES);
+				 spriteList->addSprite(newSprite);
 				 timer1->Enabled = true;
 				 timer2->Enabled = true;
 	}

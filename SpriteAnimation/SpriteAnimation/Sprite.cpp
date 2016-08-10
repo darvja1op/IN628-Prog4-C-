@@ -5,6 +5,10 @@ Sprite::Sprite(Graphics^ startCanvas, String^ startSpriteSheet, Random^ startRGe
 {
 	canvas = startCanvas;
 	spriteSheet = gcnew Bitmap(startSpriteSheet);
+
+	Color transparentColour = spriteSheet->GetPixel(0, 0);
+	spriteSheet->MakeTransparent(transparentColour);
+
 	rGen = startRGen;
 	nFrames = startNFrames;
 

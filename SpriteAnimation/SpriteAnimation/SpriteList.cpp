@@ -99,6 +99,19 @@ void SpriteList::drawSprites()
 		SpriteWalker = SpriteWalker->Next;
 	}
 }
+void SpriteList::updateSprites()
+{
+	Sprite^ SpriteWalker;
+	SpriteWalker = head;
+
+	while (SpriteWalker != nullptr)
+	{
+		//draw Sprite
+		SpriteWalker->updateFrame();
+		SpriteWalker = SpriteWalker->Next;
+	}
+}
+
 
 int SpriteList::countSprites()
 {

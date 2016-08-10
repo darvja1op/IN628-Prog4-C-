@@ -17,5 +17,6 @@ public:
 	int countSprites();
 	void eraseSprites();
 	void wanderSprites();
+	void updateSprites();
 };
 
