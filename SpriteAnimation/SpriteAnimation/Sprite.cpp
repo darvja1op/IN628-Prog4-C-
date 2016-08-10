@@ -14,8 +14,8 @@ Sprite::Sprite(Graphics^ startCanvas, String^ startSpriteSheet, Random^ startRGe
 
 	currentFrame = rGen->Next(nFrames);
 	
-	xPos = rGen->Next(200);
-	yPos = rGen->Next(200);
+	xPos = rGen->Next(1700);
+	yPos = rGen->Next(700);
 	
 	frameWidth = (spriteSheet->Width / nFrames);
 	frameHeight = spriteSheet->Height;
