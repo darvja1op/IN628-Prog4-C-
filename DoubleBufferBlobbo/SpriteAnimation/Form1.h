@@ -106,12 +106,11 @@ namespace SpriteAnimation {
 				 offScreenCanvas = Graphics::FromImage(offScreenBitmap);
 				 offScreenCanvas->DrawImage(backgroundImage, 0, 0);
 
-				 formCanvas->DrawImage(offScreenBitmap, 0, 0);
-
-				 this->Width = 1500;
-				 this->Height = 800;
-				 this->Left = 0;
-				 this->Top = 0;
+				 formCanvas->DrawImage(offScreenBitmap, Rectangle(0, 0, 1024, 768));
+				 
+				 this->Location = Point(50, 50);
+				 this->Width = 1600;
+				 this->Height = 768;
 	}
 	private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e) 
 	{
