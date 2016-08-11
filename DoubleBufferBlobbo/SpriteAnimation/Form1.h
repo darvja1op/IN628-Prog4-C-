@@ -44,9 +44,12 @@ namespace SpriteAnimation {
 
 	private:
 		SpriteList^ spriteList;
-		Graphics^ canvas;
+		Graphics^ formCanvas;
 		const int NUM_FRAMES = 8;
 		int additionCount;
+		Bitmap^ offScreenBitmap;
+		Graphics^ offScreenCanvas;
+		Image^ backgroundImage;
 
 			 Random^ rGen;
 
@@ -93,10 +96,17 @@ namespace SpriteAnimation {
 #pragma endregion
 	private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e) 
 	{
-				 canvas = CreateGraphics();
+				 formCanvas = CreateGraphics();
 				 rGen = gcnew Random();
 				 spriteList = gcnew SpriteList();
 				 additionCount = 0;
+				 backgroundImage = Image::FromFile("images\\outerSpace.jpg");
+
+				 offScreenBitmap = gcnew Bitmap(1024, 768);
+				 offScreenCanvas = Graphics::FromImage(offScreenBitmap);
+				 offScreenCanvas->DrawImage(backgroundImage, 0, 0);
+
+				 formCanvas->DrawImage(offScreenBitmap, 0, 0);
 
 				 this->Width = 1500;
 				 this->Height = 800;
@@ -108,18 +118,21 @@ namespace SpriteAnimation {
 				 additionCount++;
 				 if ((additionCount % 5) == 0)
 				 {
-					 Sprite^ newSprite = gcnew Sprite(canvas, "images\\BlobboMulti.bmp", rGen, NUM_FRAMES);
+					 Sprite^ newSprite = gcnew Sprite(offScreenCanvas, "images\\BlobboMulti.bmp", rGen, NUM_FRAMES);
 					 spriteList->addSprite(newSprite);
 				 }
-				 spriteList->eraseSprites();
+				 offScreenCanvas->DrawImage(backgroundImage, Rectangle(0, 0, 1024, 768));
+	
 				 spriteList->wanderSprites();
 				 spriteList->moveSprites();
 				 spriteList->updateSprites();
 				 spriteList->drawSprites();
+
+				 formCanvas->DrawImage(offScreenBitmap, 0, 0);
 	}
 	private: System::Void btnStart_Click(System::Object^  sender, System::EventArgs^  e) 
 	{
-				 Sprite^ newSprite = gcnew Sprite(canvas, "images\\BlobboMulti.bmp", rGen, NUM_FRAMES);
+				 Sprite^ newSprite = gcnew Sprite(formCanvas, "images\\BlobboMulti.bmp", rGen, NUM_FRAMES);
 				 spriteList->addSprite(newSprite);
 				 timer1->Enabled = true;
 	}
