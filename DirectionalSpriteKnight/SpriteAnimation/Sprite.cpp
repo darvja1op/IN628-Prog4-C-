@@ -1,13 +1,22 @@
 #include "Sprite.h"
 
+#define MAX_DIRECTIONS 4
 
-Sprite::Sprite(Graphics^ startCanvas, String^ startSpriteSheet, Random^ startRGen, int startNFrames)
+Sprite::Sprite(Graphics^ startCanvas, array<String^>^ startFileName, Random^ startRGen, int startNFrames)
 {
 	canvas = startCanvas;
-	spriteSheet = gcnew Bitmap(startSpriteSheet);
+	spriteSheets = gcnew array<Bitmap^>(MAX_DIRECTIONS);
+	for (int i = 0; i < MAX_DIRECTIONS; i++)
+	{
+		spriteSheets[i] = gcnew Bitmap(startFileName[i]);
+		spriteSheets[i]->MakeTransparent(spriteSheets[i]->GetPixel(0, 0));
+	}
 
-	Color transparentColour = spriteSheet->GetPixel(0, 0);
-	spriteSheet->MakeTransparent(transparentColour);
+	velocityDirections = gcnew array<Point>(MAX_DIRECTIONS);
+	velocityDirections[0] = Point(1, 0); //EAST
+	velocityDirections[1] = Point(0, 1); //SOUTH
+	velocityDirections[2] = Point(-1, 0); //WEST
+	velocityDirections[3] = Point(0, -1); //NORTH
 
 	rGen = startRGen;
 	nFrames = startNFrames;
@@ -17,11 +26,13 @@ Sprite::Sprite(Graphics^ startCanvas, String^ startSpriteSheet, Random^ startRGe
 	xPos = rGen->Next(1000);
 	yPos = rGen->Next(500);
 	
-	frameWidth = (spriteSheet->Width / nFrames);
-	frameHeight = spriteSheet->Height;
+	frameWidth = (spriteSheets[0]->Width / nFrames);
+	frameHeight = spriteSheets[0]->Height;
 
-	yVel = rGen->Next(10, 20);
-	xVel = rGen->Next(4);
+	YVel = rGen->Next(10, 20);
+	XVel = rGen->Next(4);
+
+	SpriteDirection = EAST;
 }
 void Sprite::draw()
 {
@@ -30,30 +41,17 @@ void Sprite::draw()
 
 	Rectangle drawRect = Rectangle(startX, startY, frameWidth, frameHeight);
 
-	canvas->DrawImage(spriteSheet, xPos, yPos, drawRect, GraphicsUnit::Pixel);
+	Bitmap^ currentBitmap = spriteSheets[SpriteDirection];
+
+	canvas->DrawImage(currentBitmap, xPos, yPos, drawRect, GraphicsUnit::Pixel);
 
 	System::Threading::Thread::Sleep(100);
 	Application::DoEvents();
 }
 void Sprite::move()
 {
-	xPos += xVel;
-	yPos += yVel;
-}
-void Sprite::wander()
-{
-	//random chance of changing X direction
-	int xProbabilityChance = rGen->Next(5);
-	if (xProbabilityChance == 0)
-	{
-		xVel *= -1;
-	}
-	//random chance of changing Y direction
-	int yProbabilityChance = rGen->Next(5);
-	if (yProbabilityChance == 0)
-	{
-		yVel *= -1;
-	}
+	xPos += XVel * velocityDirections[SpriteDirection].X;
+	yPos += YVel * velocityDirections[SpriteDirection].Y;
 }
 void Sprite::erase(Color eraseColour)
 {
@@ -63,12 +61,4 @@ void Sprite::erase(Color eraseColour)
 void Sprite::updateFrame()
 {
 	currentFrame = (currentFrame + 1) % nFrames;
-}
-void Sprite::setSpriteSheet(Bitmap^ newSpriteSheet, int newNFrames)
-{
-	nFrames = newNFrames;
-	spriteSheet = newSpriteSheet;
-
-	frameHeight = spriteSheet->Height;
-	frameWidth = spriteSheet->Width / nFrames;
 }

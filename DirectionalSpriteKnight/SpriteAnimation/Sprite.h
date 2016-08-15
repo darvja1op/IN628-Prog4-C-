@@ -1,4 +1,10 @@
 #pragma once
+
+#define EAST 0
+#define SOUTH 1
+#define WEST 2
+#define NORTH 3
+
 using namespace System;
 using namespace System::ComponentModel;
 using namespace System::Collections;
@@ -9,27 +15,27 @@ ref class Sprite
 {
 private:
 	Graphics^ canvas;
-	Bitmap^ spriteSheet;
 	Random^ rGen;
+	array<Bitmap^>^ spriteSheets;
+	array<Point>^ velocityDirections;
 	int nFrames;
 	int currentFrame;
 	int xPos;
 	int yPos;
 	int frameWidth;
 	int frameHeight;
-	int xVel;
-	int yVel;
 
 public:
 	Sprite^ Next;
+	int SpriteDirection;
+	int XVel;
+	int YVel;
 
 public:
-	Sprite(Graphics^ startCanvas, String^ startSpriteSheet, Random^ startRGen, int startNFrames);
+	Sprite(Graphics^ startCanvas, array<String^>^ startFileName, Random^ startRGen, int startNFrames);
 	void draw();
 	void move();
-	void wander();
 	void erase(Color eraseColour);
 	void updateFrame();
-	void setSpriteSheet(Bitmap^ newSpriteSheet, int newNFrames);
 };
 

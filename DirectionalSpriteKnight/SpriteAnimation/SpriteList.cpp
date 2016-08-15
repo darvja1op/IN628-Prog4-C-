@@ -61,20 +61,6 @@ void SpriteList::deleteOneSprite(Sprite^ SpriteToDelete)
 	}
 }
 
-
-void SpriteList::wanderSprites()
-{
-	Sprite^ SpriteWalker;
-	SpriteWalker = head;
-
-	while (SpriteWalker != nullptr)
-	{
-		//move Sprite
-		SpriteWalker->wander();
-		SpriteWalker = SpriteWalker->Next;
-	}
-}
-
 void SpriteList::moveSprites()
 {
 	Sprite^ SpriteWalker;
@@ -138,24 +124,3 @@ void SpriteList::eraseSprites()
 		SpriteWalker = SpriteWalker->Next;
 	}
 }
-
-/*
-
-Unnecessary until Sprites can be "Dead"
-
-void SpriteList::deleteAllDeadSprites()
-{
-	Sprite^ spriteWalker;
-	spriteWalker = head;
-
-	while (spriteWalker != nullptr)
-	{
-		//delete pellet if dead
-		if (spriteWalker->IsAlive == false)
-		{
-			deleteOneSprite(spriteWalker);
-		}
-		spriteWalker = spriteWalker->Next;
-	}
-}
-*/

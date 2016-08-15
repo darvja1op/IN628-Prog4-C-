@@ -38,20 +38,19 @@ namespace SpriteAnimation {
 			}
 		}
 	private: System::Windows::Forms::Timer^  timer1;
-	private: System::Windows::Forms::Button^  btnStart;
+
 	protected:
 	private: System::ComponentModel::IContainer^  components;
 
 	private:
-		SpriteList^ spriteList;
 		Graphics^ formCanvas;
 		const int NUM_FRAMES = 8;
 		int additionCount;
 		Bitmap^ offScreenBitmap;
 		Graphics^ offScreenCanvas;
-		Image^ backgroundImage;
-
+		SpriteList^ chickenList;
 			 Random^ rGen;
+			 Sprite^ knight;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -62,7 +61,6 @@ namespace SpriteAnimation {
 		{
 			this->components = (gcnew System::ComponentModel::Container());
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
-			this->btnStart = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
 			// timer1
@@ -70,23 +68,12 @@ namespace SpriteAnimation {
 			this->timer1->Interval = 500;
 			this->timer1->Tick += gcnew System::EventHandler(this, &Form1::timer1_Tick);
 			// 
-			// btnStart
-			// 
-			this->btnStart->Location = System::Drawing::Point(13, 13);
-			this->btnStart->Name = L"btnStart";
-			this->btnStart->Size = System::Drawing::Size(75, 23);
-			this->btnStart->TabIndex = 0;
-			this->btnStart->Text = L"Start!";
-			this->btnStart->UseVisualStyleBackColor = true;
-			this->btnStart->Click += gcnew System::EventHandler(this, &Form1::btnStart_Click);
-			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::Color::Black;
 			this->ClientSize = System::Drawing::Size(710, 505);
-			this->Controls->Add(this->btnStart);
 			this->Name = L"Form1";
 			this->Text = L"Form1";
 			this->Load += gcnew System::EventHandler(this, &Form1::Form1_Load);
@@ -98,42 +85,64 @@ namespace SpriteAnimation {
 	{
 				 formCanvas = CreateGraphics();
 				 rGen = gcnew Random();
-				 spriteList = gcnew SpriteList();
-				 additionCount = 0;
-				 backgroundImage = Image::FromFile("images\\outerSpace.jpg");
 
 				 offScreenBitmap = gcnew Bitmap(1024, 768);
 				 offScreenCanvas = Graphics::FromImage(offScreenBitmap);
-				 offScreenCanvas->DrawImage(backgroundImage, 0, 0);
 
 				 formCanvas->DrawImage(offScreenBitmap, Rectangle(0, 0, 1024, 768));
 				 
 				 this->Location = Point(50, 50);
 				 this->Width = 1600;
 				 this->Height = 768;
+
+				 generateChickenSprites();
+				 knight = generateKnightSprite();
 	}
 	private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e) 
 	{
-				 additionCount++;
-				 if ((additionCount % 5) == 0)
-				 {
-					 Sprite^ newSprite = gcnew Sprite(offScreenCanvas, "images\\BlobboMulti.bmp", rGen, NUM_FRAMES);
-					 spriteList->addSprite(newSprite);
-				 }
-				 offScreenCanvas->DrawImage(backgroundImage, Rectangle(0, 0, 1024, 768));
-	
-				 spriteList->wanderSprites();
-				 spriteList->moveSprites();
-				 spriteList->updateSprites();
-				 spriteList->drawSprites();
+				 chickenList->eraseSprites();
+				 chickenList->moveSprites();
+				 chickenList->updateSprites();
+				 chickenList->drawSprites();
 
-				 formCanvas->DrawImage(offScreenBitmap, 0, 0);
+				 knight->erase(Color::Black);
+				 knight->move();
+				 knight->updateFrame();
+				 knight->draw();
 	}
-	private: System::Void btnStart_Click(System::Object^  sender, System::EventArgs^  e) 
-	{
-				 Sprite^ newSprite = gcnew Sprite(formCanvas, "images\\BlobboMulti.bmp", rGen, NUM_FRAMES);
-				 spriteList->addSprite(newSprite);
-				 timer1->Enabled = true;
+	private: Sprite^ generateKnightSprite(){
+				 int framesInKnightSheet = 8;
+				 int directions = 4;
+
+				 array<String^>^ knightImages = gcnew array<String^>(directions);
+				 knightImages[EAST] = "images/Knight Walk East 8.bmp";
+				 knightImages[NORTH] = "images/Knight Walk North 8.bmp";
+				 knightImages[SOUTH] = "images/Knight Walk South 8.bmp";
+				 knightImages[WEST] = "images/Knight Walk West 8.bmp";
+
+				 return gcnew Sprite(offScreenCanvas, knightImages, rGen, framesInKnightSheet);
 	}
+			 private: void generateChickenSprites(){
+						  int framesInChickenSheet = 8;
+						  int directions = 4;
+						  int nChickens = 12;
+
+						  chickenList = gcnew SpriteList();
+
+						  array<String^>^ chickenImages = gcnew array<String^>(directions);
+						  chickenImages[EAST] = "images/Little Chicken Walk East 8.bmp";
+						  chickenImages[NORTH] = "images/Little Chicken Walk North 8.bmp";
+						  chickenImages[SOUTH] = "images/Little Chicken Walk South 8.bmp";
+						  chickenImages[WEST] = "images/Little Chicken Walk West 8.bmp";
+
+						  for (int i = 0; i < nChickens; i++)
+						  {
+							  Sprite^ newChicken = gcnew Sprite(offScreenCanvas, chickenImages, rGen, framesInChickenSheet);
+							  newChicken->SpriteDirection = rGen->Next(directions);
+							  newChicken->XVel = rGen->Next(1, 7);
+							  newChicken->YVel = rGen->Next(1, 7);
+							  chickenList->addSprite(newChicken);
+						  }
+			 }
 	};
 }
