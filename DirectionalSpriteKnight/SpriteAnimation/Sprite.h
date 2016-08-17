@@ -32,7 +32,7 @@ public:
 	int YVel;
 
 public:
-	Sprite(Graphics^ startCanvas, array<String^>^ startFileName, Random^ startRGen, int startNFrames);
+	Sprite(Graphics^ startCanvas, array<String^>^ startFileNames, Random^ startRGen, int startNFrames);
 	void draw();
 	void move();
 	void erase(Color eraseColour);

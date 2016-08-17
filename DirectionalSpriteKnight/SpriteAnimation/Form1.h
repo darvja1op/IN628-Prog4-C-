@@ -49,8 +49,8 @@ namespace SpriteAnimation {
 		Bitmap^ offScreenBitmap;
 		Graphics^ offScreenCanvas;
 		SpriteList^ chickenList;
-			 Random^ rGen;
-			 Sprite^ knight;
+		Random^ rGen;
+		Sprite^ knight;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -65,7 +65,7 @@ namespace SpriteAnimation {
 			// 
 			// timer1
 			// 
-			this->timer1->Interval = 500;
+			this->timer1->Interval = 400;
 			this->timer1->Tick += gcnew System::EventHandler(this, &Form1::timer1_Tick);
 			// 
 			// Form1
@@ -81,24 +81,26 @@ namespace SpriteAnimation {
 
 		}
 #pragma endregion
-	private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e) 
+	private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e)
 	{
 				 formCanvas = CreateGraphics();
 				 rGen = gcnew Random();
 
-				 offScreenBitmap = gcnew Bitmap(1024, 768);
+				 offScreenBitmap = gcnew Bitmap(800, 600);
 				 offScreenCanvas = Graphics::FromImage(offScreenBitmap);
 
-				 formCanvas->DrawImage(offScreenBitmap, Rectangle(0, 0, 1024, 768));
-				 
+				 formCanvas->DrawImage(offScreenBitmap, Rectangle(0, 0, 800, 600));
+
 				 this->Location = Point(50, 50);
-				 this->Width = 1600;
-				 this->Height = 768;
+				 this->Width = 800;
+				 this->Height = 600;
 
 				 generateChickenSprites();
 				 knight = generateKnightSprite();
+
+				 timer1->Enabled = true;
 	}
-	private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e) 
+	private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e)
 	{
 				 chickenList->eraseSprites();
 				 chickenList->moveSprites();
@@ -109,6 +111,8 @@ namespace SpriteAnimation {
 				 knight->move();
 				 knight->updateFrame();
 				 knight->draw();
+
+				 formCanvas->DrawImage(offScreenBitmap, 0, 0);
 	}
 	private: Sprite^ generateKnightSprite(){
 				 int framesInKnightSheet = 8;
@@ -122,27 +126,27 @@ namespace SpriteAnimation {
 
 				 return gcnew Sprite(offScreenCanvas, knightImages, rGen, framesInKnightSheet);
 	}
-			 private: void generateChickenSprites(){
-						  int framesInChickenSheet = 8;
-						  int directions = 4;
-						  int nChickens = 12;
+	private: void generateChickenSprites(){
+				 int framesInChickenSheet = 8;
+				 int directions = 4;
+				 int nChickens = 12;
 
-						  chickenList = gcnew SpriteList();
+				 chickenList = gcnew SpriteList();
 
-						  array<String^>^ chickenImages = gcnew array<String^>(directions);
-						  chickenImages[EAST] = "images/Little Chicken Walk East 8.bmp";
-						  chickenImages[NORTH] = "images/Little Chicken Walk North 8.bmp";
-						  chickenImages[SOUTH] = "images/Little Chicken Walk South 8.bmp";
-						  chickenImages[WEST] = "images/Little Chicken Walk West 8.bmp";
+				 array<String^>^ chickenImages = gcnew array<String^>(directions);
+				 chickenImages[EAST] = "images/Little Chicken Walk East 8.bmp";
+				 chickenImages[NORTH] = "images/Little Chicken Walk North 8.bmp";
+				 chickenImages[SOUTH] = "images/Little Chicken Walk South 8.bmp";
+				 chickenImages[WEST] = "images/Little Chicken Walk West 8.bmp";
 
-						  for (int i = 0; i < nChickens; i++)
-						  {
-							  Sprite^ newChicken = gcnew Sprite(offScreenCanvas, chickenImages, rGen, framesInChickenSheet);
-							  newChicken->SpriteDirection = rGen->Next(directions);
-							  newChicken->XVel = rGen->Next(1, 7);
-							  newChicken->YVel = rGen->Next(1, 7);
-							  chickenList->addSprite(newChicken);
-						  }
-			 }
+				 for (int i = 0; i < nChickens; i++)
+				 {
+					 Sprite^ newChicken = gcnew Sprite(offScreenCanvas, chickenImages, rGen, framesInChickenSheet);
+					 newChicken->SpriteDirection = rGen->Next(directions);
+					 newChicken->XVel = rGen->Next(1, 7);
+					 newChicken->YVel = rGen->Next(1, 7);
+					 chickenList->addSprite(newChicken);
+				 }
+	}
 	};
 }

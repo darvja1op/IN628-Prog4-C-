@@ -2,14 +2,15 @@
 
 #define MAX_DIRECTIONS 4
 
-Sprite::Sprite(Graphics^ startCanvas, array<String^>^ startFileName, Random^ startRGen, int startNFrames)
+Sprite::Sprite(Graphics^ startCanvas, array<String^>^ startFileNames, Random^ startRGen, int startNFrames)
 {
 	canvas = startCanvas;
 	spriteSheets = gcnew array<Bitmap^>(MAX_DIRECTIONS);
 	for (int i = 0; i < MAX_DIRECTIONS; i++)
 	{
-		spriteSheets[i] = gcnew Bitmap(startFileName[i]);
-		spriteSheets[i]->MakeTransparent(spriteSheets[i]->GetPixel(0, 0));
+		spriteSheets[i] = gcnew Bitmap(startFileNames[i]);
+		Color transparentColour = spriteSheets[i]->GetPixel(0, 0);
+		spriteSheets[i]->MakeTransparent();
 	}
 
 	velocityDirections = gcnew array<Point>(MAX_DIRECTIONS);
@@ -23,8 +24,8 @@ Sprite::Sprite(Graphics^ startCanvas, array<String^>^ startFileName, Random^ sta
 
 	currentFrame = rGen->Next(nFrames);
 	
-	xPos = rGen->Next(1000);
-	yPos = rGen->Next(500);
+	xPos = rGen->Next(800);
+	yPos = rGen->Next(600);
 	
 	frameWidth = (spriteSheets[0]->Width / nFrames);
 	frameHeight = spriteSheets[0]->Height;
