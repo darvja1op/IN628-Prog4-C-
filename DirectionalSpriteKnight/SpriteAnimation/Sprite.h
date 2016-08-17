@@ -4,8 +4,6 @@
 #define SOUTH 1
 #define WEST 2
 #define NORTH 3
-#define WIDTH 600
-#define HEIGHT 800
 
 using namespace System;
 using namespace System::ComponentModel;

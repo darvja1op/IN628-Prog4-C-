@@ -51,6 +51,8 @@ namespace SpriteAnimation {
 		SpriteList^ chickenList;
 		Random^ rGen;
 		Sprite^ knight;
+		int HEIGHT;
+		int WIDTH;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -72,7 +74,7 @@ namespace SpriteAnimation {
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::Color::Black;
-			this->ClientSize = System::Drawing::Size(800, 600);
+			this->ClientSize = System::Drawing::Size(818, 647);
 			this->Name = L"Form1";
 			this->Text = L"Form1";
 			this->Load += gcnew System::EventHandler(this, &Form1::Form1_Load);
@@ -86,14 +88,18 @@ namespace SpriteAnimation {
 				 formCanvas = CreateGraphics();
 				 rGen = gcnew Random();
 
+				 this->Width = 800;
+				 this->Height = 600;
+				 WIDTH = this->Width;
+				 HEIGHT = this->Height;
+
 				 offScreenBitmap = gcnew Bitmap(WIDTH, HEIGHT);
 				 offScreenCanvas = Graphics::FromImage(offScreenBitmap);
 
-				 formCanvas->DrawImage(offScreenBitmap, Rectangle(0, 0, WIDTH, HEIGHT));
+				 formCanvas->DrawImage(offScreenBitmap, 0,0);
 
 				 generateChickenSprites();
-				 knight = generateKnightSprite();				 
-
+				 knight = generateKnightSprite();
 				 timer1->Enabled = true;
 	}
 	private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e)
