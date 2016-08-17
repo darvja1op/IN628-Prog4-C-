@@ -24,8 +24,8 @@ Sprite::Sprite(Graphics^ startCanvas, array<String^>^ startFileNames, Random^ st
 
 	currentFrame = rGen->Next(nFrames);
 	
-	xPos = rGen->Next(800);
-	yPos = rGen->Next(600);
+	xPos = rGen->Next(WIDTH);
+	yPos = rGen->Next(HEIGHT);
 	
 	frameWidth = (spriteSheets[0]->Width / nFrames);
 	frameHeight = spriteSheets[0]->Height;
@@ -54,18 +54,18 @@ void Sprite::move()
 
 	if (xPos < 0)
 	{
-		SpriteDirection = WEST;
-	}
-	if (xPos > 800)
-	{
 		SpriteDirection = EAST;
+	}
+	if (xPos > WIDTH)
+	{
+		SpriteDirection = WEST;
 	}
 
 	if (yPos < 0)
 	{
 		SpriteDirection = SOUTH;
 	}
-	if (yPos > 600)
+	if (yPos > HEIGHT)
 	{
 		SpriteDirection = NORTH;
 	}

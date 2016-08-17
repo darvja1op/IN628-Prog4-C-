@@ -72,7 +72,7 @@ namespace SpriteAnimation {
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::Color::Black;
-			this->ClientSize = System::Drawing::Size(710, 505);
+			this->ClientSize = System::Drawing::Size(800, 600);
 			this->Name = L"Form1";
 			this->Text = L"Form1";
 			this->Load += gcnew System::EventHandler(this, &Form1::Form1_Load);
@@ -86,19 +86,13 @@ namespace SpriteAnimation {
 				 formCanvas = CreateGraphics();
 				 rGen = gcnew Random();
 
-				 offScreenBitmap = gcnew Bitmap(800, 600);
+				 offScreenBitmap = gcnew Bitmap(WIDTH, HEIGHT);
 				 offScreenCanvas = Graphics::FromImage(offScreenBitmap);
 
-				 formCanvas->DrawImage(offScreenBitmap, Rectangle(0, 0, 800, 600));
-
-				 this->Location = Point(50, 50);
-				 this->Width = 800;
-				 this->Height = 600;
+				 formCanvas->DrawImage(offScreenBitmap, Rectangle(0, 0, WIDTH, HEIGHT));
 
 				 generateChickenSprites();
-				 knight = generateKnightSprite();
-
-				 
+				 knight = generateKnightSprite();				 
 
 				 timer1->Enabled = true;
 	}
@@ -155,10 +149,10 @@ namespace SpriteAnimation {
 				 switch (e->KeyData)
 				 {
 				 case Keys::Left:
-					 knight->SpriteDirection = EAST;
+					 knight->SpriteDirection = WEST;
 					 break;
 				 case Keys::Right:
-					 knight->SpriteDirection = WEST;
+					 knight->SpriteDirection = EAST;
 					 break;
 				 case Keys::Up:
 					 knight->SpriteDirection = NORTH;
