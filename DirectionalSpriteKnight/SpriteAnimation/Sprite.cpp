@@ -30,8 +30,8 @@ Sprite::Sprite(Graphics^ startCanvas, array<String^>^ startFileNames, Random^ st
 	frameWidth = (spriteSheets[0]->Width / nFrames);
 	frameHeight = spriteSheets[0]->Height;
 
-	YVel = rGen->Next(10, 20);
-	XVel = rGen->Next(4);
+	YVel = rGen->Next(7, 20);
+	XVel = rGen->Next(7, 20);
 
 	SpriteDirection = EAST;
 }
@@ -45,14 +45,30 @@ void Sprite::draw()
 	Bitmap^ currentBitmap = spriteSheets[SpriteDirection];
 
 	canvas->DrawImage(currentBitmap, xPos, yPos, drawRect, GraphicsUnit::Pixel);
-
-	System::Threading::Thread::Sleep(100);
 	Application::DoEvents();
 }
 void Sprite::move()
 {
 	xPos += XVel * velocityDirections[SpriteDirection].X;
 	yPos += YVel * velocityDirections[SpriteDirection].Y;
+
+	if (xPos < 0)
+	{
+		SpriteDirection = WEST;
+	}
+	if (xPos > 800)
+	{
+		SpriteDirection = EAST;
+	}
+
+	if (yPos < 0)
+	{
+		SpriteDirection = SOUTH;
+	}
+	if (yPos > 600)
+	{
+		SpriteDirection = NORTH;
+	}
 }
 void Sprite::erase(Color eraseColour)
 {

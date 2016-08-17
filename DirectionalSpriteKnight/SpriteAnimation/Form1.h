@@ -65,7 +65,6 @@ namespace SpriteAnimation {
 			// 
 			// timer1
 			// 
-			this->timer1->Interval = 400;
 			this->timer1->Tick += gcnew System::EventHandler(this, &Form1::timer1_Tick);
 			// 
 			// Form1
@@ -77,6 +76,7 @@ namespace SpriteAnimation {
 			this->Name = L"Form1";
 			this->Text = L"Form1";
 			this->Load += gcnew System::EventHandler(this, &Form1::Form1_Load);
+			this->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &Form1::Form1_KeyDown);
 			this->ResumeLayout(false);
 
 		}
@@ -97,6 +97,8 @@ namespace SpriteAnimation {
 
 				 generateChickenSprites();
 				 knight = generateKnightSprite();
+
+				 
 
 				 timer1->Enabled = true;
 	}
@@ -148,5 +150,23 @@ namespace SpriteAnimation {
 					 chickenList->addSprite(newChicken);
 				 }
 	}
-	};
+	private: System::Void Form1_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) 
+	{
+				 switch (e->KeyData)
+				 {
+				 case Keys::Left:
+					 knight->SpriteDirection = EAST;
+					 break;
+				 case Keys::Right:
+					 knight->SpriteDirection = WEST;
+					 break;
+				 case Keys::Up:
+					 knight->SpriteDirection = NORTH;
+					 break;
+				 case Keys::Down:
+					 knight->SpriteDirection = SOUTH;
+					 break;
+				 }
+	}
+};
 }
