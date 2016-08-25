@@ -1,5 +1,9 @@
 #pragma once
 
+#include "Tile.h"
+
+#define MAX_TILES 2
+
 using namespace System;
 using namespace System::ComponentModel;
 using namespace System::Collections;

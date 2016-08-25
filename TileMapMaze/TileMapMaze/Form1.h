@@ -1,5 +1,9 @@
 #pragma once
 
+#include "TileMap.h"
+#include "TileList.h"
+#include "Tile.h"
+
 namespace TileMapMaze {
 
 	using namespace System;
@@ -44,6 +48,11 @@ namespace TileMapMaze {
 		/// Required designer variable.
 		/// </summary>
 		System::ComponentModel::Container ^components;
+
+	private:
+		Graphics^ canvas;
+		TileMap^ tileMap;
+		TileList^ startTileList;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -99,11 +108,19 @@ namespace TileMapMaze {
 
 		}
 #pragma endregion
-	private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e) {
+	private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e) 
+	{
+				 canvas = panel1->CreateGraphics();
+				 startTileList = gcnew TileList();
+				 tileMap = gcnew TileMap(startTileList, canvas)
 	}
-	private: System::Void btnRandom_Click(System::Object^  sender, System::EventArgs^  e) {
+	private: System::Void btnRandom_Click(System::Object^  sender, System::EventArgs^  e) 
+	{
+
 	}
-	private: System::Void btnLoadFile_Click(System::Object^  sender, System::EventArgs^  e) {
+	private: System::Void btnLoadFile_Click(System::Object^  sender, System::EventArgs^  e) 
+	{
+
 	}
 	};
 }

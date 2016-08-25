@@ -1,7 +1,4 @@
 #include "TileList.h"
-#include "Tile.h"
-
-#define MAX_TILES 2
 
 TileList::TileList()
 {

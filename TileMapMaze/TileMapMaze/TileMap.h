@@ -1,10 +1,16 @@
 #pragma once
+
+#include "TileList.h"
+
+#define MAP_COLS 10
+
 using namespace System;
 using namespace System::ComponentModel;
 using namespace System::Collections;
 using namespace System::Windows::Forms;
 using namespace System::Data;
 using namespace System::Drawing;
+using namespace System::IO;
 
 ref class TileMap
 {
@@ -18,5 +24,6 @@ public:
 	Bitmap^ GetMapEntry(int col, int row);
 
 	void DrawMap();
+	void LoadMapFromFile(String^ mapFileName);
 };
 
