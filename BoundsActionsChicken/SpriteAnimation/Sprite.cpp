@@ -1,8 +1,6 @@
 #include "Sprite.h"
 
-#define MAX_DIRECTIONS 4
-
-Sprite::Sprite(Graphics^ startCanvas, array<String^>^ startFileNames, Random^ startRGen, int startNFrames)
+Sprite::Sprite(Graphics^ startCanvas, array<String^>^ startFileNames, Random^ startRGen, int startNFrames, Rectangle startBoundingArea)
 {
 	canvas = startCanvas;
 	spriteSheets = gcnew array<Bitmap^>(MAX_DIRECTIONS);
@@ -13,11 +11,14 @@ Sprite::Sprite(Graphics^ startCanvas, array<String^>^ startFileNames, Random^ st
 		spriteSheets[i]->MakeTransparent();
 	}
 
+	BoundingArea = startBoundingArea;
+	BoundsAction = BOUNCE;
+
 	velocityDirections = gcnew array<Point>(MAX_DIRECTIONS);
-	velocityDirections[0] = Point(1, 0); //EAST
-	velocityDirections[1] = Point(0, 1); //SOUTH
-	velocityDirections[2] = Point(-1, 0); //WEST
-	velocityDirections[3] = Point(0, -1); //NORTH
+	velocityDirections[EAST] = Point(1, 0); //EAST
+	velocityDirections[SOUTH] = Point(0, 1); //SOUTH
+	velocityDirections[WEST] = Point(-1, 0); //WEST
+	velocityDirections[NORTH] = Point(0, -1); //NORTH
 
 	rGen = startRGen;
 	nFrames = startNFrames;
@@ -52,22 +53,27 @@ void Sprite::move()
 	xPos += XVel * velocityDirections[SpriteDirection].X;
 	yPos += YVel * velocityDirections[SpriteDirection].Y;
 
-	if (xPos < 0)
+	if ((xPos < BoundingArea.Left) || ((xPos+frameWidth) > BoundingArea.Right) ||
+		(yPos < BoundingArea.Top) || (yPos + frameHeight > BoundingArea.Bottom))
 	{
-		SpriteDirection = EAST;
-	}
-	if (xPos > 800-frameWidth)
-	{
-		SpriteDirection = WEST;
-	}
-
-	if (yPos < 0)
-	{
-		SpriteDirection = SOUTH;
-	}
-	if (yPos > 600-frameHeight)
-	{
-		SpriteDirection = NORTH;
+		//run bounds action
+		switch (BoundsAction)
+		{
+		case BOUNCE:
+			bounce();
+			break;
+		case DIE:
+			die();
+			break;
+		case WRAP:
+			wrap();
+			break;
+		case STOP:
+			stop();
+			break;
+		default:
+			break;
+		}
 	}
 }
 void Sprite::erase(Color eraseColour)
@@ -78,4 +84,40 @@ void Sprite::erase(Color eraseColour)
 void Sprite::updateFrame()
 {
 	currentFrame = (currentFrame + 1) % nFrames;
+}
+
+void Sprite::bounce()
+{
+	//change sprite direction
+	SpriteDirection = (SpriteDirection + 2) % MAX_DIRECTIONS;
+}
+
+void Sprite::wrap()
+{
+	if (SpriteDirection == EAST)
+	{
+		xPos = BoundingArea.Left;
+	}
+	if (SpriteDirection == WEST)
+	{
+		xPos = BoundingArea.Right+frameWidth;
+	}
+	if (SpriteDirection == NORTH)
+	{
+		yPos = BoundingArea.Bottom + frameWidth;
+	}
+	if (SpriteDirection == SOUTH)
+	{
+		yPos = BoundingArea.Top + frameWidth;
+	}
+}
+
+void Sprite::die()
+{
+
+}
+
+void Sprite::stop()
+{
+
 }

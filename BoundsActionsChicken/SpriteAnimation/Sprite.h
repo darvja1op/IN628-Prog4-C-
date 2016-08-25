@@ -5,6 +5,13 @@
 #define WEST 2
 #define NORTH 3
 
+
+#define MAX_DIRECTIONS 4
+#define BOUNCE 0
+#define WRAP 1
+#define DIE 2
+#define STOP 3
+
 using namespace System;
 using namespace System::ComponentModel;
 using namespace System::Collections;
@@ -30,12 +37,18 @@ public:
 	int SpriteDirection;
 	int XVel;
 	int YVel;
+	property Rectangle BoundingArea;
+	property int BoundsAction;
 
 public:
-	Sprite(Graphics^ startCanvas, array<String^>^ startFileNames, Random^ startRGen, int startNFrames);
+	Sprite(Graphics^ startCanvas, array<String^>^ startFileNames, Random^ startRGen, int startNFrames, Rectangle startBoundingArea);
 	void draw();
 	void move();
 	void erase(Color eraseColour);
 	void updateFrame();
+	void die();
+	void bounce();
+	void stop();
+	void wrap();
 };
 

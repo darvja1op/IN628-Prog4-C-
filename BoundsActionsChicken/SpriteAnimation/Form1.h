@@ -99,7 +99,7 @@ namespace SpriteAnimation {
 				 formCanvas->DrawImage(offScreenBitmap, 0,0);
 
 				 generateChickenSprites();
-				 knight = generateKnightSprite();
+				 //knight = generateKnightSprite();
 				 timer1->Enabled = true;
 	}
 	private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e)
@@ -109,10 +109,11 @@ namespace SpriteAnimation {
 				 chickenList->updateSprites();
 				 chickenList->drawSprites();
 
+				 /*
 				 knight->erase(Color::Black);
 				 knight->move();
 				 knight->updateFrame();
-				 knight->draw();
+				 knight->draw();*/
 
 				 formCanvas->DrawImage(offScreenBitmap, 0, 0);
 	}
@@ -126,7 +127,7 @@ namespace SpriteAnimation {
 				 knightImages[SOUTH] = "images/Knight Walk South 8.bmp";
 				 knightImages[WEST] = "images/Knight Walk West 8.bmp";
 
-				 return gcnew Sprite(offScreenCanvas, knightImages, rGen, framesInKnightSheet);
+				 return gcnew Sprite(offScreenCanvas, knightImages, rGen, framesInKnightSheet, Rectangle(0,0,Width,Height));
 	}
 	private: void generateChickenSprites(){
 				 int framesInChickenSheet = 8;
@@ -141,9 +142,11 @@ namespace SpriteAnimation {
 				 chickenImages[SOUTH] = "images/Little Chicken Walk South 8.bmp";
 				 chickenImages[WEST] = "images/Little Chicken Walk West 8.bmp";
 
+				 Rectangle chickenBounds = Rectangle(0, 0, Width, Height);
+
 				 for (int i = 0; i < nChickens; i++)
 				 {
-					 Sprite^ newChicken = gcnew Sprite(offScreenCanvas, chickenImages, rGen, framesInChickenSheet);
+					 Sprite^ newChicken = gcnew Sprite(offScreenCanvas, chickenImages, rGen, framesInChickenSheet, chickenBounds);
 					 newChicken->SpriteDirection = rGen->Next(directions);
 					 newChicken->XVel = rGen->Next(1, 7);
 					 newChicken->YVel = rGen->Next(1, 7);
