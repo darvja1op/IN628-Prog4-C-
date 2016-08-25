@@ -2,7 +2,7 @@
 
 #include "Tile.h"
 
-#define MAX_TILES 2
+#define MAX_TILES 3
 
 using namespace System;
 using namespace System::ComponentModel;

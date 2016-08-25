@@ -2,7 +2,8 @@
 
 #include "TileList.h"
 
-#define MAP_COLS 10
+#define MAP_COLS 30
+#define MAP_ROWS 20
 
 using namespace System;
 using namespace System::ComponentModel;
@@ -25,5 +26,6 @@ public:
 
 	void DrawMap();
 	void LoadMapFromFile(String^ mapFileName);
+	void LoadRandomMap(int numDifferentTiles);
 };
 

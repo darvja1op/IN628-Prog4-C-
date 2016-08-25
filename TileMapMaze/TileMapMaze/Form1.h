@@ -4,6 +4,8 @@
 #include "TileList.h"
 #include "Tile.h"
 
+#define DIFF_TILES 3
+
 namespace TileMapMaze {
 
 	using namespace System;
@@ -52,7 +54,7 @@ namespace TileMapMaze {
 	private:
 		Graphics^ canvas;
 		TileMap^ tileMap;
-		TileList^ startTileList;
+		TileList^ tileList;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -90,14 +92,14 @@ namespace TileMapMaze {
 			// 
 			this->panel1->Location = System::Drawing::Point(13, 58);
 			this->panel1->Name = L"panel1";
-			this->panel1->Size = System::Drawing::Size(757, 483);
+			this->panel1->Size = System::Drawing::Size(1182, 884);
 			this->panel1->TabIndex = 2;
 			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(782, 553);
+			this->ClientSize = System::Drawing::Size(1207, 954);
 			this->Controls->Add(this->panel1);
 			this->Controls->Add(this->btnLoadFile);
 			this->Controls->Add(this->btnRandom);
@@ -111,16 +113,31 @@ namespace TileMapMaze {
 	private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e) 
 	{
 				 canvas = panel1->CreateGraphics();
-				 startTileList = gcnew TileList();
-				 tileMap = gcnew TileMap(startTileList, canvas)
+				 tileList = gcnew TileList();
+				 
+				 Bitmap^ grassBitmap = gcnew Bitmap("images/Dry Grass Tile 32.bmp");
+				 Bitmap^ cobblestoneBitmap = gcnew Bitmap("images/Cobblestones Tile 32.bmp");
+				 Bitmap^ flowerBitmap = gcnew Bitmap("images/Flower Tile 32.bmp");
+
+				 Tile^ grassTile = gcnew Tile(grassBitmap);
+				 Tile^ cobblestoneTile = gcnew Tile(cobblestoneBitmap);
+				 Tile^ flowerTile = gcnew Tile(flowerBitmap);
+
+				 tileList->SetTileArrayEntry(0, grassTile);
+				 tileList->SetTileArrayEntry(1, cobblestoneTile);
+				 tileList->SetTileArrayEntry(2, flowerTile);
+
+				 tileMap = gcnew TileMap(tileList, canvas);
 	}
 	private: System::Void btnRandom_Click(System::Object^  sender, System::EventArgs^  e) 
 	{
-
+				 tileMap->LoadRandomMap(DIFF_TILES);
+				 tileMap->DrawMap();
 	}
 	private: System::Void btnLoadFile_Click(System::Object^  sender, System::EventArgs^  e) 
 	{
-
+				 tileMap->LoadMapFromFile("mazeMap_30_20.csv");
+				 tileMap->DrawMap();
 	}
 	};
 }
