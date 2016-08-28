@@ -39,6 +39,7 @@ public:
 	int YVel;
 	property Rectangle BoundingArea;
 	property int BoundsAction;
+	property bool IsAlive;
 
 public:
 	Sprite(Graphics^ startCanvas, array<String^>^ startFileNames, Random^ startRGen, int startNFrames, Rectangle startBoundingArea);

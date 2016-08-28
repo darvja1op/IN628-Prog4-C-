@@ -80,9 +80,12 @@ void SpriteList::drawSprites()
 
 	while (SpriteWalker != nullptr)
 	{
-		//draw Sprite
-		SpriteWalker->draw();
-		SpriteWalker = SpriteWalker->Next;
+		if (SpriteWalker->IsAlive)
+		{
+			//draw Sprite
+			SpriteWalker->draw();
+			SpriteWalker = SpriteWalker->Next;
+		}		
 	}
 }
 void SpriteList::updateSprites()

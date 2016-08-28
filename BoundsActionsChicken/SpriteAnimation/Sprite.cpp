@@ -12,7 +12,9 @@ Sprite::Sprite(Graphics^ startCanvas, array<String^>^ startFileNames, Random^ st
 	}
 
 	BoundingArea = startBoundingArea;
-	BoundsAction = BOUNCE;
+	BoundsAction = WRAP;
+
+	IsAlive = true;
 
 	velocityDirections = gcnew array<Point>(MAX_DIRECTIONS);
 	velocityDirections[EAST] = Point(1, 0); //EAST
@@ -114,10 +116,12 @@ void Sprite::wrap()
 
 void Sprite::die()
 {
-
+	IsAlive = false;
 }
 
 void Sprite::stop()
 {
-
+	//set velocities to 0 so the Sprite no longer moves
+	XVel = 0;
+	YVel = 0;
 }
