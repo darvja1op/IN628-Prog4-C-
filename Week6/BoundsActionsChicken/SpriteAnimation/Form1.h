@@ -52,7 +52,12 @@ namespace SpriteAnimation {
 		Random^ rGen;
 		Sprite^ knight;
 		int HEIGHT;
-		int WIDTH;
+	private: System::Windows::Forms::GroupBox^  groupBox1;
+	private: System::Windows::Forms::RadioButton^  rdoWrap;
+	private: System::Windows::Forms::RadioButton^  rdoBounce;
+	private: System::Windows::Forms::RadioButton^  rdoDie;
+	private: System::Windows::Forms::RadioButton^  rdoStop;
+			 int WIDTH;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -63,11 +68,75 @@ namespace SpriteAnimation {
 		{
 			this->components = (gcnew System::ComponentModel::Container());
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
+			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
+			this->rdoStop = (gcnew System::Windows::Forms::RadioButton());
+			this->rdoDie = (gcnew System::Windows::Forms::RadioButton());
+			this->rdoBounce = (gcnew System::Windows::Forms::RadioButton());
+			this->rdoWrap = (gcnew System::Windows::Forms::RadioButton());
+			this->groupBox1->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// timer1
 			// 
 			this->timer1->Tick += gcnew System::EventHandler(this, &Form1::timer1_Tick);
+			// 
+			// groupBox1
+			// 
+			this->groupBox1->Controls->Add(this->rdoWrap);
+			this->groupBox1->Controls->Add(this->rdoBounce);
+			this->groupBox1->Controls->Add(this->rdoDie);
+			this->groupBox1->Controls->Add(this->rdoStop);
+			this->groupBox1->ForeColor = System::Drawing::SystemColors::ControlLightLight;
+			this->groupBox1->Location = System::Drawing::Point(13, 13);
+			this->groupBox1->Name = L"groupBox1";
+			this->groupBox1->Size = System::Drawing::Size(138, 138);
+			this->groupBox1->TabIndex = 0;
+			this->groupBox1->TabStop = false;
+			this->groupBox1->Text = L"Bounds Actions";
+			// 
+			// rdoStop
+			// 
+			this->rdoStop->AutoSize = true;
+			this->rdoStop->Location = System::Drawing::Point(7, 22);
+			this->rdoStop->Name = L"rdoStop";
+			this->rdoStop->Size = System::Drawing::Size(58, 21);
+			this->rdoStop->TabIndex = 0;
+			this->rdoStop->TabStop = true;
+			this->rdoStop->Text = L"Stop";
+			this->rdoStop->UseVisualStyleBackColor = true;
+			// 
+			// rdoDie
+			// 
+			this->rdoDie->AutoSize = true;
+			this->rdoDie->Location = System::Drawing::Point(7, 50);
+			this->rdoDie->Name = L"rdoDie";
+			this->rdoDie->Size = System::Drawing::Size(50, 21);
+			this->rdoDie->TabIndex = 1;
+			this->rdoDie->TabStop = true;
+			this->rdoDie->Text = L"Die";
+			this->rdoDie->UseVisualStyleBackColor = true;
+			// 
+			// rdoBounce
+			// 
+			this->rdoBounce->AutoSize = true;
+			this->rdoBounce->Location = System::Drawing::Point(7, 78);
+			this->rdoBounce->Name = L"rdoBounce";
+			this->rdoBounce->Size = System::Drawing::Size(77, 21);
+			this->rdoBounce->TabIndex = 2;
+			this->rdoBounce->TabStop = true;
+			this->rdoBounce->Text = L"Bounce";
+			this->rdoBounce->UseVisualStyleBackColor = true;
+			// 
+			// rdoWrap
+			// 
+			this->rdoWrap->AutoSize = true;
+			this->rdoWrap->Location = System::Drawing::Point(7, 106);
+			this->rdoWrap->Name = L"rdoWrap";
+			this->rdoWrap->Size = System::Drawing::Size(84, 21);
+			this->rdoWrap->TabIndex = 3;
+			this->rdoWrap->TabStop = true;
+			this->rdoWrap->Text = L"rdoWrap";
+			this->rdoWrap->UseVisualStyleBackColor = true;
 			// 
 			// Form1
 			// 
@@ -75,10 +144,13 @@ namespace SpriteAnimation {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::Color::Black;
 			this->ClientSize = System::Drawing::Size(818, 647);
+			this->Controls->Add(this->groupBox1);
 			this->Name = L"Form1";
 			this->Text = L"Form1";
 			this->Load += gcnew System::EventHandler(this, &Form1::Form1_Load);
 			this->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &Form1::Form1_KeyDown);
+			this->groupBox1->ResumeLayout(false);
+			this->groupBox1->PerformLayout();
 			this->ResumeLayout(false);
 
 		}
