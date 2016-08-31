@@ -131,14 +131,16 @@ Sprite^ SpriteList::checkCollisions(Sprite^ otherGuy)
 {
 	Sprite^ SpriteWalker;
 	SpriteWalker = head;
-
 	bool collision = false;
-
-	while (collision != true)
+	while (SpriteWalker != nullptr)
 	{
 		collision = SpriteWalker->CollidedWithMe(otherGuy);
+		if (collision)
+		{
+			return SpriteWalker;
+		}
+
 		SpriteWalker = SpriteWalker->Next;
 	}
-
-	return SpriteWalker;
+	return nullptr;
 }
