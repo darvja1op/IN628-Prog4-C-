@@ -32,8 +32,8 @@ Sprite::Sprite(Graphics^ startCanvas, array<String^>^ startFileNames, int startN
 	frameWidth = (spriteSheets[0]->Width / nFrames);
 	frameHeight = spriteSheets[0]->Height;
 
-	YVel = 8;
-	XVel = 8;
+	YVel = 3;
+	XVel = 3;
 
 	SpriteDirection = EAST;
 }

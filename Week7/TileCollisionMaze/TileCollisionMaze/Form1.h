@@ -176,6 +176,25 @@ namespace TileCollisionMaze {
 	}
 	private: System::Void Form1_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) 
 	{
+				 switch (e->KeyData)
+				 {
+				 case Keys::Left:
+					 chicken->SpriteDirection = WEST;
+					 chicken->move();
+					 break;
+				 case Keys::Right:
+					 chicken->SpriteDirection = EAST;
+					 chicken->move();
+					 break;
+				 case Keys::Up:
+					 chicken->SpriteDirection = NORTH;
+					 chicken->move();
+					 break;
+				 case Keys::Down:
+					 chicken->SpriteDirection = SOUTH;
+					 chicken->move();
+					 break;
+				 }
 	}
 };
 }
