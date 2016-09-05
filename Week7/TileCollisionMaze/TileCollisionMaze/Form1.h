@@ -3,6 +3,7 @@
 #include "TileMap.h"
 #include "TileList.h"
 #include "Tile.h"
+#include "Sprite.h"
 
 #define DIFF_TILES 13
 
@@ -51,10 +52,13 @@ namespace TileCollisionMaze {
 
 	private:
 		Graphics^ canvas;
+		Graphics^ offScreenCanvas;
 		TileMap^ tileMap;
 	private: System::Windows::Forms::Panel^  panel1;
 	private: System::Windows::Forms::Timer^  timer1;
 			 TileList^ tileList;
+			 Sprite^ chicken;
+			 Bitmap^ offScreenBitmap;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -88,6 +92,7 @@ namespace TileCollisionMaze {
 			this->Name = L"Form1";
 			this->Text = L"Form1";
 			this->Load += gcnew System::EventHandler(this, &Form1::Form1_Load);
+			this->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &Form1::Form1_KeyDown);
 			this->ResumeLayout(false);
 
 		}
@@ -96,6 +101,9 @@ namespace TileCollisionMaze {
 	{
 				 canvas = panel1->CreateGraphics();
 				 tileList = gcnew TileList();
+
+				 offScreenBitmap = gcnew Bitmap(Width,Height);
+				 offScreenCanvas = Graphics::FromImage(offScreenBitmap);
 
 				 Bitmap^ bookBitmap = gcnew Bitmap("images/Book Tile.bmp");
 				 Bitmap^ grassBitmap = gcnew Bitmap("images/Grass Tile.jpg");
@@ -126,29 +134,48 @@ namespace TileCollisionMaze {
 				 Tile^ pumpkinTile = gcnew Tile(pumpkinBitmap);
 				 Tile^ potionTile = gcnew Tile(potionBitmap);
 
-				 tileList->SetTileArrayEntry(2, bookTile);
-				 tileList->SetTileArrayEntry(12, grassTile);
-				 tileList->SetTileArrayEntry(1, candyTile);
-				 tileList->SetTileArrayEntry(3, gloomTile);
-				 tileList->SetTileArrayEntry(5, squirtleTile);
-				 tileList->SetTileArrayEntry(4, pikachuTile);
-				 tileList->SetTileArrayEntry(8, tangelaTile);
-				 tileList->SetTileArrayEntry(5, starmieTile);
-				 tileList->SetTileArrayEntry(2, flower3Tile);
 				 tileList->SetTileArrayEntry(0, flower2Tile);
+				 tileList->SetTileArrayEntry(1, candyTile);
+				 tileList->SetTileArrayEntry(2, flower3Tile);
+				 tileList->SetTileArrayEntry(3, gloomTile);
+				 tileList->SetTileArrayEntry(4, pikachuTile);
+				 tileList->SetTileArrayEntry(5, squirtleTile);
+				 tileList->SetTileArrayEntry(6, starmieTile);
+				 tileList->SetTileArrayEntry(7, bookTile);
+				 tileList->SetTileArrayEntry(8, tangelaTile);
 				 tileList->SetTileArrayEntry(9, flower1Tile);
 				 tileList->SetTileArrayEntry(10, pumpkinTile);
 				 tileList->SetTileArrayEntry(11, potionTile);
+				 tileList->SetTileArrayEntry(12, grassTile);
 
-				 tileMap = gcnew TileMap(tileList, canvas);
+				 tileMap = gcnew TileMap(tileList, offScreenCanvas);
+
+				 tileMap->LoadMapFromFile("newChickenMap16x12.csv");
+
+				 int framesInChickenSheet = 8;
+				 int directions = 4;
+				 Rectangle chickenBounds = Rectangle(0, 0, Width, Height);
+
+				 array<String^>^ chickenImages = gcnew array<String^>(directions);
+				 chickenImages[EAST] = "images/Chicken East.bmp";
+				 chickenImages[NORTH] = "images/Chicken North.bmp";
+				 chickenImages[SOUTH] = "images/Chicken South.bmp";
+				 chickenImages[WEST] = "images/Chicken West.bmp";
+
+				 chicken = gcnew Sprite(offScreenCanvas, chickenImages, framesInChickenSheet, chickenBounds);
 
 				 timer1->Enabled = true;
 
-				 tileMap->LoadMapFromFile("newChickenMap16x12.csv");
+				 
 	}
 	private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e) 
 	{
 				 tileMap->DrawMap();
+				 chicken->draw();
+				 canvas->DrawImage(offScreenBitmap, 0, 0);				 
 	}
-	};
+	private: System::Void Form1_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) 
+	{
+	}
+};
 }

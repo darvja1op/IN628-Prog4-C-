@@ -1,5 +1,7 @@
 #pragma once
 
+#define MAX_TILES 13
+
 using namespace System;
 using namespace System::ComponentModel;
 using namespace System::Collections;

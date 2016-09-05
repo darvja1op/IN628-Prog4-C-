@@ -16,7 +16,7 @@ using namespace System::IO;
 ref class TileMap
 {
 private:
-	TileList^ gardenTiles;
+	TileList^ tileList;
 	array<int, 2>^ map;
 	Graphics^ canvas;
 public:

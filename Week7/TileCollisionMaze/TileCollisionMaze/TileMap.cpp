@@ -2,7 +2,7 @@
 
 TileMap::TileMap(TileList^ startTileList, Graphics^ startCanvas)
 {
-	gardenTiles = startTileList;
+	tileList = startTileList;
 	canvas = startCanvas;
 	map = gcnew array<int, 2>(MAP_COLS, MAP_ROWS);
 }
@@ -10,7 +10,7 @@ TileMap::TileMap(TileList^ startTileList, Graphics^ startCanvas)
 Bitmap^ TileMap::GetMapEntry(int col, int row)
 {
 	int currTileIndex = map[col, row];
-	return gardenTiles->GetTileBitmap(currTileIndex);
+	return tileList->GetTileBitmap(currTileIndex);
 }
 
 void TileMap::DrawMap()
@@ -19,7 +19,7 @@ void TileMap::DrawMap()
 	int drawLocY;
 	int currentTileIndex;
 	Bitmap^ currentTileBitmap;
-	Bitmap^ sampleTile = gardenTiles->GetTileBitmap(0);
+	Bitmap^ sampleTile = tileList->GetTileBitmap(12);
 	int tileWidth = sampleTile->Width;
 	int tileHeight = sampleTile->Height;
 
@@ -31,9 +31,9 @@ void TileMap::DrawMap()
 			drawLocY = rows * tileHeight;
 
 			currentTileIndex = map[columns, rows];
-			currentTileBitmap = gardenTiles->GetTileBitmap(currentTileIndex);
+			currentTileBitmap = tileList->GetTileBitmap(currentTileIndex);
 
-			canvas->DrawImage(currentTileBitmap, drawLocX, drawLocY);
+			canvas->DrawImage(currentTileBitmap, drawLocX, drawLocY, 64, 64);
 		}
 	}
 }
