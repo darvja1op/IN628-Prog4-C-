@@ -253,9 +253,12 @@ namespace PirateShip {
 		 {
 			 // Update the cannonball's position
 			 // ADD CODE HERE
+				 cannonBallX += velocityX;
+				 cannonBallY += velocityY;
 
 			 // Implement gravity
 			 // ADD CODE HERE
+				 velocityY += gravity;
 
 			 // Redraw the screen by raising the Pain event. 
 			 Refresh();	
@@ -263,6 +266,10 @@ namespace PirateShip {
 			// Check for collisions or falling off the screen, and handle accordingly. Use the collided() 
 			// method defined below, if you wish
 			// ADD CODE HERE
+			 if (collided())
+			 {
+				 MessageBox::Show("Boom!");
+			 }
 
 		 }
 private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) 
@@ -273,13 +280,20 @@ private: System::Void button1_Click(System::Object^  sender, System::EventArgs^ 
 
 			// Read the power from the trackbar tbPower and convert to an int
 			// ADD CODE HERE
+			int power = (int)tbPower->Value;
 
 			// Read the degree of rotation from trackbar tbAim and convert to an int
 			// ADD CODE HERE
-		
+			int rotationAngle = (int)tbAim->Value * -1;
+			double radiansAngle = rotationAngle * 0.01745;
 
 			// Use the power and orientation to compute the starting velocities for the cannonball
 			// ADD CODE HERE
+			int xDelta = Math::Cos(radiansAngle) * power;
+			int yDelta = Math::Sin(radiansAngle) * power;
+
+			velocityY = yDelta;
+			velocityX = xDelta;
 
 			// Set a sensible value for gravity
 			gravity = 2;
