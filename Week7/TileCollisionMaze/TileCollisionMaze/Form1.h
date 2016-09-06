@@ -74,10 +74,12 @@ namespace TileCollisionMaze {
 			// 
 			// panel1
 			// 
-			this->panel1->Location = System::Drawing::Point(13, 13);
+			this->panel1->Location = System::Drawing::Point(10, 11);
+			this->panel1->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->panel1->Name = L"panel1";
-			this->panel1->Size = System::Drawing::Size(1559, 980);
+			this->panel1->Size = System::Drawing::Size(1169, 796);
 			this->panel1->TabIndex = 0;
+			this->panel1->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &Form1::panel1_Paint);
 			// 
 			// timer1
 			// 
@@ -85,10 +87,11 @@ namespace TileCollisionMaze {
 			// 
 			// Form1
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
+			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(1584, 1005);
+			this->ClientSize = System::Drawing::Size(1188, 817);
 			this->Controls->Add(this->panel1);
+			this->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->Name = L"Form1";
 			this->Text = L"Form1";
 			this->Load += gcnew System::EventHandler(this, &Form1::Form1_Load);
@@ -120,19 +123,19 @@ namespace TileCollisionMaze {
 				 Bitmap^ potionBitmap = gcnew Bitmap("images/Potion Tile.bmp");
 
 
-				 Tile^ bookTile = gcnew Tile(bookBitmap);
-				 Tile^ grassTile = gcnew Tile(grassBitmap);
-				 Tile^ candyTile = gcnew Tile(candyBitmap);
-				 Tile^ gloomTile = gcnew Tile(gloomBitmap);
-				 Tile^ squirtleTile = gcnew Tile(squirtleBitmap);
-				 Tile^ pikachuTile = gcnew Tile(pikachuBitmap);
-				 Tile^ tangelaTile = gcnew Tile(tangelaBitmap);
-				 Tile^ starmieTile = gcnew Tile(starmieBitmap);
-				 Tile^ flower3Tile = gcnew Tile(flower3Bitmap);
-				 Tile^ flower2Tile = gcnew Tile(flower2Bitmap);
-				 Tile^ flower1Tile = gcnew Tile(flower1Bitmap);
-				 Tile^ pumpkinTile = gcnew Tile(pumpkinBitmap);
-				 Tile^ potionTile = gcnew Tile(potionBitmap);
+				 Tile^ bookTile = gcnew Tile(bookBitmap, false);
+				 Tile^ grassTile = gcnew Tile(grassBitmap, true);
+				 Tile^ candyTile = gcnew Tile(candyBitmap, false);
+				 Tile^ gloomTile = gcnew Tile(gloomBitmap, false);
+				 Tile^ squirtleTile = gcnew Tile(squirtleBitmap, false);
+				 Tile^ pikachuTile = gcnew Tile(pikachuBitmap, false);
+				 Tile^ tangelaTile = gcnew Tile(tangelaBitmap, false);
+				 Tile^ starmieTile = gcnew Tile(starmieBitmap, false);
+				 Tile^ flower3Tile = gcnew Tile(flower3Bitmap, false);
+				 Tile^ flower2Tile = gcnew Tile(flower2Bitmap, false);
+				 Tile^ flower1Tile = gcnew Tile(flower1Bitmap, false);
+				 Tile^ pumpkinTile = gcnew Tile(pumpkinBitmap, false);
+				 Tile^ potionTile = gcnew Tile(potionBitmap, false);
 
 				 tileList->SetTileArrayEntry(0, flower2Tile);
 				 tileList->SetTileArrayEntry(1, candyTile);
@@ -180,21 +183,24 @@ namespace TileCollisionMaze {
 				 {
 				 case Keys::Left:
 					 chicken->SpriteDirection = WEST;
-					 chicken->move();
 					 break;
 				 case Keys::Right:
 					 chicken->SpriteDirection = EAST;
-					 chicken->move();
 					 break;
 				 case Keys::Up:
 					 chicken->SpriteDirection = NORTH;
-					 chicken->move();
 					 break;
 				 case Keys::Down:
 					 chicken->SpriteDirection = SOUTH;
-					 chicken->move();
 					 break;
 				 }
+				 if (chicken->IsLegalMove(tileMap))
+				 {
+					 chicken->move();
+				 }
 	}
+private: System::Void panel1_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) 
+{
+}
 };
 }

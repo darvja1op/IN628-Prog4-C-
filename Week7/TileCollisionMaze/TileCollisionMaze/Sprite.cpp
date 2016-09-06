@@ -26,8 +26,8 @@ Sprite::Sprite(Graphics^ startCanvas, array<String^>^ startFileNames, int startN
 
 	currentFrame = 0;
 	
-	xPos = 0;
-	yPos = 0;
+	xPos = 62;
+	yPos = 62;
 	
 	frameWidth = (spriteSheets[0]->Width / nFrames);
 	frameHeight = spriteSheets[0]->Height;
@@ -123,4 +123,40 @@ void Sprite::stop()
 	//set velocities to 0 so the Sprite no longer moves
 	XVel = 0;
 	YVel = 0;
+}
+
+bool Sprite::IsLegalMove(TileMap^ tileMap)
+{
+	int newxPos = xPos + XVel * velocityDirections[SpriteDirection].X;
+	int newyPos = yPos + YVel * velocityDirections[SpriteDirection].Y;
+
+	int directionCornerX;
+	int directionCornerY;
+
+	switch (SpriteDirection)
+	{
+	case NORTH:
+		directionCornerX = newxPos;
+		directionCornerY = newyPos;
+		break;
+	case SOUTH:
+		directionCornerX = newxPos;
+		directionCornerY = newyPos + frameHeight;
+		break;
+	case WEST:
+		directionCornerX = newxPos;
+		directionCornerY = newyPos + frameHeight;
+		break;
+	case EAST:
+		directionCornerX = newxPos + frameWidth;
+		directionCornerY = newyPos + frameHeight;
+		break;
+	default:
+		break;
+	}
+
+	int column = directionCornerX / TILE_SIDE;
+	int row = directionCornerY / TILE_SIDE;
+
+	return tileMap->isTileWalkable(column, row);
 }

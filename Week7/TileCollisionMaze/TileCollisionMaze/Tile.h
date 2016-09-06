@@ -12,7 +12,8 @@ ref class Tile
 {
 public:
 	property Bitmap^ TileBitmap;
+	property bool IsWalkable;
 public:
-	Tile(Bitmap^ startTileBitmap);
+	Tile(Bitmap^ startTileBitmap, bool startIsWalkable);
 };
 

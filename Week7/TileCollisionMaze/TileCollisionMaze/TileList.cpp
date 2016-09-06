@@ -15,3 +15,10 @@ void TileList::SetTileArrayEntry(int tileIndex, Tile^ tileToEnter)
 {
 	tileArray[tileIndex] = tileToEnter;
 }
+
+bool TileList::isTileWalkable(int tileIndex)
+{
+	Tile^ selectedTile = tileArray[tileIndex];
+	bool isWalkable = selectedTile->IsWalkable;
+	return isWalkable;
+}

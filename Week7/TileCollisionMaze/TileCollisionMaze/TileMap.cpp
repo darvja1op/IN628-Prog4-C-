@@ -63,3 +63,9 @@ void TileMap::SetMapEntry(int col, int row, int tileIndex)
 {
 
 }
+
+bool TileMap::isTileWalkable(int col, int row)
+{
+	int currTileIndex = map[col, row];
+	return tileList->isTileWalkable(currTileIndex);
+}

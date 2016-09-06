@@ -26,5 +26,6 @@ public:
 
 	void DrawMap();
 	void LoadMapFromFile(String^ mapFileName);
+	bool isTileWalkable(int col, int row);
 };
 

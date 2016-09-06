@@ -18,5 +18,6 @@ public:
 	Bitmap^ GetTileBitmap(int tileIndex);
 
 	void SetTileArrayEntry(int tileIndex, Tile^ tileToEnter);
+	bool isTileWalkable(int tileIndex);
 };
 

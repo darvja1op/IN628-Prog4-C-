@@ -1,16 +1,19 @@
 #pragma once
 
+#include "TileMap.h"
+
 #define EAST 0
 #define SOUTH 1
 #define WEST 2
 #define NORTH 3
-
-
 #define MAX_DIRECTIONS 4
+
 #define BOUNCE 0
 #define WRAP 1
 #define DIE 2
 #define STOP 3
+
+#define TILE_SIDE 32
 
 using namespace System;
 using namespace System::ComponentModel;
@@ -50,5 +53,6 @@ public:
 	void bounce();
 	void stop();
 	void wrap();
+	bool IsLegalMove(TileMap^ tileMap);
 };
 
