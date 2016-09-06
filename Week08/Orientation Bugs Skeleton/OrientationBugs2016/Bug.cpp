@@ -15,6 +15,8 @@ Bug::Bug(int startTeam, Pond^ startHomePond, Graphics^ startCanvas, Random^ star
 	bugState = SEARCHING;
 	health = rGen->Next(50) + 50;    // Health between 0 and 100%. Determines the intensity of their colour
 
+	age = 0;
+
 	litterSize = defaultMaxLitterSize;					// Interesting to allow this to be modified in the UI
 
 	parent = nullptr;	
@@ -61,15 +63,21 @@ void Bug::runBugCycle()
 		{
 			bugState = SEARCHING;
 		}
+		move();
 		break;
 
 	case SPAWNING:
 		spawn();
 		bugState = SEARCHING;
+		move();
 		break;
 
 	case SEARCHING:
-		
+		age++;
+		if (age > 200)
+		{
+			bugState = DYING;
+		}
 		// If it's time to change direction, do so
 		changeDirectionCount--;				// Counter for changing direction
 		if (changeDirectionCount == 0)
@@ -87,10 +95,10 @@ void Bug::runBugCycle()
 			spawnCount = defaultStepsToSpawn;
 			bugState = SPAWNING;
 		}
+		move();
 	} // end switch;
 	
-	// Regardless of state, everybody moves and everybody draws.
-	move();
+	// Regardless of state, everybody draws.
 	draw();
 }
 
@@ -153,21 +161,30 @@ void Bug::draw()
 	}
 	else
 	{
-		//get correct color
-		healthRatio = health / 100.0;
-		colourShade = 100 + (155 * healthRatio);		// desaturate if health is low
-
-		switch (team)
+		if (bugState == DYING)
 		{
-		case 0:
-			drawBodyColour = Color::FromArgb(colourShade, 50, 0);
-			break;
-		case 1:
-			drawBodyColour = Color::FromArgb(0, 50, colourShade);
-			break;
+			drawBodyColour = Color::White;
+			diameter = defaultAdultDiameter - 5;
+			nucleus = defaultAdultDiameter - 5;
 		}
-		diameter = defaultAdultDiameter;
-		nucleus = defaultAdultNucleus;
+		else
+		{
+			//get correct color
+			healthRatio = health / 100.0;
+			colourShade = 100 + (155 * healthRatio);		// desaturate if health is low
+
+			switch (team)
+			{
+			case 0:
+				drawBodyColour = Color::FromArgb(colourShade, 50, 0);
+				break;
+			case 1:
+				drawBodyColour = Color::FromArgb(0, 50, colourShade);
+				break;
+			}
+			diameter = defaultAdultDiameter;
+			nucleus = defaultAdultNucleus;
+		}		
 	}
 
 	// Create brushes
@@ -189,6 +206,13 @@ void Bug::draw()
 void Bug::pointMeAt(Bug^ otherBug)
 {
 	// YOUR CODE HERE
+	int xDelta = otherBug->xPos - xPos;
+	int yDelta = otherBug->yPos - yPos;
+
+	double angleToTarget = Math::Atan2(yDelta, xDelta);
+
+	xVel = Math::Cos(angleToTarget) * speed;
+	yVel = Math::Sin(angleToTarget) * speed;
 }
 
 

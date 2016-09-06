@@ -17,6 +17,7 @@ ref class Pond;
 #define SEARCHING  0		// Default state. Wanders around semi-randomly
 #define SPAWNING   1		// Bug reproducing
 #define BABY       2		// Juvenile bug. Follows parent
+#define DYING      3		// Old Bug, turns orange and dies
 
 ref class Bug
 {
@@ -43,6 +44,7 @@ ref class Bug
 	property int spawnCount;						// Counter for spawning
 	property int maturationCount;					// Counter for becoming an adult
 	
+	property int age;
 
 	property Color teamColor;	// Color to draw bug
 	property Graphics^ bugCanvas;
