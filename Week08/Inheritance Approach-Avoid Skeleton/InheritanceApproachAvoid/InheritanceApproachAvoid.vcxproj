@@ -78,11 +78,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Approacher.cpp" />
+    <ClCompile Include="Avoider.cpp" />
     <ClCompile Include="Form1.cpp" />
     <ClCompile Include="SimpleSprite.cpp" />
     <ClCompile Include="SpriteList.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Approacher.h" />
+    <ClInclude Include="Avoider.h" />
     <ClInclude Include="Form1.h">
       <FileType>CppForm</FileType>
     </ClInclude>
