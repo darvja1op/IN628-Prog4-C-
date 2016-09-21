@@ -12,26 +12,23 @@ void Creature::UpdateState(array<Thing^>^ foodInWorld, array<Thing^>^ obstaclesI
 	{
 	case WANDERING:
 		//if obstacle in range then reverse, change state to ORIENTING
-		for each (Thing^ obstacle in obstaclesInWorld)
+		int obstacleIndex = FindNearIndex(obstaclesInWorld);
+		if (obstacleIndex != -1)
 		{
-			double distance = ComputeDistance(obstacle);
-			if (distance < sensingRange)
-			{
-				location.X -= direction.X;
-				location.Y -= direction.Y;
-				creatureState = ORIENTING;
-			}
+			creatureState = ORIENTING;
 		}
 		
 
 		//if food in range then change to EATING
-		for each (Thing^ food in foodInWorld)
+		int foodIndex = FindNearIndex(foodInWorld);
+		if (foodIndex != -1)
 		{
-			double distance = ComputeDistance(food);
-			if (distance < sensingRange)
-			{
-				creatureState = EATING;
-			}
+			creatureState = EATING;
+		}
+
+		if (wanderingTicks % wanderingTime == 0)
+		{
+			creatureState = ORIENTING;
 		}
 		break;
 	case EATING:
@@ -45,8 +42,6 @@ void Creature::UpdateState(array<Thing^>^ foodInWorld, array<Thing^>^ obstaclesI
 		//change state to WANDERING
 		creatureState = WANDERING;
 		break;
-	default:
-		break;
 	}
 }
 void Creature::PerformAction()
@@ -55,6 +50,7 @@ void Creature::PerformAction()
 	{
 	case WANDERING:
 		Move();
+		wanderingTicks++;
 		break;
 	case EATING:
 		radius++;
@@ -63,13 +59,23 @@ void Creature::PerformAction()
 	case ORIENTING:
 		ChangeRandomdirection();
 		break;
-	default:
-		break;
 	}
 }
 
 
 int Creature::FindNearIndex(array<Thing^>^ otherGuys)
 {
+	int index = -1;
+	for (int i = 0; i < otherGuys->Length;i++)
+	{
+		double distance = ComputeDistance(otherGuys[i]);
+		if (distance < sensingRange)
+		{
+			location.X -= direction.X;
+			location.Y -= direction.Y;
 
+			index = i;
+		}
+	}
+	return index;
 }

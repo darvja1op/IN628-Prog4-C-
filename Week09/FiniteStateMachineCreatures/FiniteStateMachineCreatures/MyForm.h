@@ -128,15 +128,33 @@ namespace FiniteStateMachineCreatures {
 					 Thing^ newObstacle = gcnew Thing(offScreenCanvas, rGen, startWorldWidth, startWorldHeight, "images/gemstone.jpg");
 					 obstacleArray[i] = newObstacle;
 				 }
+
+				 creatureArray = gcnew array<Creature^>(20);
+				 for (int i = 0; i < creatureArray->Length; i++)
+				 {
+					 Creature^ newCreature = gcnew Creature(offScreenCanvas, rGen, startWorldWidth, startWorldHeight, "images/littleBug1.png");
+					 creatureArray[i] = newCreature;
+				 }
 	}
 	private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e) 
 	{
 				 //update creature state
-				 for each (Thing^ creature in creatureArray)
-				 {
-					 creature->
-				 }
 				 //make creatures perform their actions
+				 for each (Creature^ creature in creatureArray)
+				 {
+					 creature->UpdateState(foodArray, obstacleArray);
+					 creature->PerformAction();
+					 creature->Draw();
+				 }
+
+				 for each (Thing^ var in foodArray)
+				 {
+					 var->Draw();
+				 }
+				 for each (Thing^ var in obstacleArray)
+				 {
+					 var->Draw();
+				 }
 	}
 	};
 }

@@ -1,50 +1,88 @@
 #include "Thing.h"
 
+
 Thing::Thing()
 {
-
 }
-Thing::Thing(Graphics^ startcanvas, Random^ startRandom, int startWorldWidth, int startWorldHeight, String^ imageFileName)
+
+
+Thing::Thing(Graphics^ startcanvas, Random^ startRandom, int startworldWidth, int startworldHeight, String^ imageFileName)
 {
 	canvas = startcanvas;
 	rGen = startRandom;
-	worldWidth = startWorldWidth;
-	worldHeight = startWorldHeight;
+	worldWidth = startworldWidth;
+	worldHeight = startworldHeight;
+
 	thingImage = gcnew Bitmap(imageFileName);
+	thingImage->MakeTransparent(thingImage->GetPixel(0, 0));
+	radius = thingImage->Width / 2;
+
+	// some defaults...
+	speed = rGen->Next(5) + 1;
+	isAlive = true;
+
+	PointMeAt(rGen->Next(worldWidth), rGen->Next(worldHeight));
+
 }
 
 void Thing::Move()
 {
 	location.X += direction.X;
 	location.Y += direction.Y;
+
+	if ((location.X < 0) || (location.Y < 0) || (location.X > worldWidth) || (location.Y > worldHeight))
+		ChangeRandomdirection();
 }
+
 void Thing::ChangeRandomdirection()
 {
-	double angle = rGen->Next(360) * 0.01745;
-
-	direction.X = (int)(Math::Cos(angle) * speed);
-	direction.Y = (int)(Math::Sin(angle) * speed);
+	int newX = rGen->Next(worldWidth);
+	int newY = rGen->Next(worldHeight);
+	PointMeAt(newX, newY);
 }
+
 void Thing::Draw()
 {
-	canvas->DrawImage(thingImage, location);
+	if (isAlive)
+	{
+		canvas->DrawImage(thingImage, Rectangle(location.X, location.Y, radius * 2, radius * 2));
+	}
 }
+
 void Thing::PointMeAt(int newX, int newY)
 {
-	double xDelta = newX - location.X;
-	double yDelta = newY - location.Y;
+	// Compute deltas to target point
+	double deltaX = newX - location.X;
+	double deltaY = newY - location.Y;
 
-	double angleToTarget = Math::Atan2(yDelta, xDelta);
+	// Use Atan2 to get the angle to the target point
+	double angle = Math::Atan2(deltaX, deltaY);
 
-	direction.X = Math::Cos(angleToTarget) * speed;
-	direction.Y = Math::Sin(angleToTarget) * speed;
+	// Use the angle and my speed to work out the X and Y velocities
+	double vectorX = Math::Sin(angle) * speed;
+	double vectorY = Math::Cos(angle) * speed;
+
+	// Store them for the next move
+	direction.X = Convert::ToInt16(vectorX);
+	direction.Y = Convert::ToInt16(vectorY);
 }
+
 double Thing::ComputeDistance(Thing^ otherGuy)
 {
-	double xDelta = otherGuy->location.X - location.X;
-	double yDelta = otherGuy->location.Y - location.Y;
+	// Pythagorean distance computation
+	int centreX = location.X + (radius / 2);
+	int centreY = location.Y + (radius / 2);
 
-	double totalDistance = xDelta + yDelta;
+	int otherX = otherGuy->location.X + (otherGuy->radius / 2);
+	int otherY = otherGuy->location.Y + (otherGuy->radius / 2);
 
-	return totalDistance;
+	double deltaX = centreX - otherX;
+	double deltaY = centreY - otherY;
+
+	double xSq = deltaX * deltaX;
+	double ySq = deltaY * deltaY;
+
+	double distance = Math::Sqrt(xSq + ySq);
+
+	return distance;
 }
