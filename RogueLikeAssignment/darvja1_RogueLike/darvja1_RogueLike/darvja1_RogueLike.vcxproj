@@ -79,11 +79,26 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Form1.cpp" />
+    <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="TileList.cpp" />
+    <ClCompile Include="TileMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Form1.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="GameManager.h" />
+    <ClInclude Include="Sprite.h" />
+    <ClInclude Include="Tile.h" />
+    <ClInclude Include="TileList.h" />
+    <ClInclude Include="TileMap.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.h</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
