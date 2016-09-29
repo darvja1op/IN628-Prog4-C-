@@ -1,6 +1,6 @@
 #pragma once
 
-#define MAX_TILES 13
+#define MAX_TILES 5
 
 using namespace System;
 using namespace System::ComponentModel;
