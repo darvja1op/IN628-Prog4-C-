@@ -1,6 +1,6 @@
 #include "Sprite.h"
 
-Sprite::Sprite(Graphics^ startCanvas, array<String^>^ startFileNames, int startNFrames, Rectangle startBoundingArea)
+Sprite::Sprite(Graphics^ startCanvas, array<String^>^ startFileNames, int startNFrames)
 {
 	canvas = startCanvas;
 	spriteSheets = gcnew array<Bitmap^>(MAX_DIRECTIONS);
@@ -10,9 +10,6 @@ Sprite::Sprite(Graphics^ startCanvas, array<String^>^ startFileNames, int startN
 		Color transparentColour = spriteSheets[i]->GetPixel(0, 0);
 		spriteSheets[i]->MakeTransparent();
 	}
-
-	BoundingArea = startBoundingArea;
-	BoundsAction = WRAP;
 
 	IsAlive = true;
 
@@ -32,10 +29,9 @@ Sprite::Sprite(Graphics^ startCanvas, array<String^>^ startFileNames, int startN
 	frameWidth = (spriteSheets[0]->Width / nFrames);
 	frameHeight = spriteSheets[0]->Height;
 
-	YVel = 3;
-	XVel = 3;
-
 	SpriteDirection = EAST;
+
+	ProportionReduction = 0.8;
 }
 void Sprite::draw()
 {
@@ -53,29 +49,6 @@ void Sprite::move()
 {
 	xPos += XVel * velocityDirections[SpriteDirection].X;
 	yPos += YVel * velocityDirections[SpriteDirection].Y;
-
-	if ((xPos < BoundingArea.Left) || ((xPos+frameWidth) > BoundingArea.Right) ||
-		(yPos < BoundingArea.Top) || (yPos + frameHeight > BoundingArea.Bottom))
-	{
-		//run bounds action
-		switch (BoundsAction)
-		{
-		case BOUNCE:
-			bounce();
-			break;
-		case DIE:
-			die();
-			break;
-		case WRAP:
-			wrap();
-			break;
-		case STOP:
-			stop();
-			break;
-		default:
-			break;
-		}
-	}
 }
 void Sprite::erase(Color eraseColour)
 {
@@ -91,26 +64,6 @@ void Sprite::bounce()
 {
 	//change sprite direction
 	SpriteDirection = (SpriteDirection + 2) % MAX_DIRECTIONS;
-}
-
-void Sprite::wrap()
-{
-	if (SpriteDirection == EAST)
-	{
-		xPos = BoundingArea.Left;
-	}
-	if (SpriteDirection == WEST)
-	{
-		xPos = BoundingArea.Right+frameWidth;
-	}
-	if (SpriteDirection == NORTH)
-	{
-		yPos = BoundingArea.Bottom + frameWidth;
-	}
-	if (SpriteDirection == SOUTH)
-	{
-		yPos = BoundingArea.Top + frameWidth;
-	}
 }
 
 void Sprite::die()
@@ -159,4 +112,41 @@ bool Sprite::IsLegalMove(TileMap^ tileMap)
 	int row = directionCornerY / TILE_SIDE;
 
 	return tileMap->isTileWalkable(column, row);
+}
+
+bool Sprite::CollidedWithMe(Sprite^ otherSprite)
+{
+	bool collided = true;
+
+	int sprite1BottomEdge, sprite1TopEdge, sprite1LeftEdge, sprite1RightEdge;
+	int sprite2BottomEdge, sprite2TopEdge, sprite2LeftEdge, sprite2RightEdge;
+
+	sprite1BottomEdge = yPos + frameHeight - (frameHeight * ProportionReduction);
+	sprite1TopEdge = yPos + (frameHeight * ProportionReduction);
+	sprite1LeftEdge = xPos + (frameWidth * ProportionReduction);
+	sprite1RightEdge = xPos + frameWidth - (frameWidth * ProportionReduction);
+
+	sprite2BottomEdge = otherSprite->yPos + frameHeight - (frameHeight * ProportionReduction);
+	sprite2TopEdge = otherSprite->yPos + (frameHeight * ProportionReduction);
+	sprite2LeftEdge = otherSprite->xPos + (frameWidth * ProportionReduction);
+	sprite2RightEdge = otherSprite->xPos + frameWidth - (frameWidth * ProportionReduction);
+
+	if (sprite1BottomEdge < sprite2BottomEdge)
+	{
+		collided = false;
+	}
+	if (sprite1TopEdge < sprite2TopEdge)
+	{
+		collided = false;
+	}
+	if (sprite1LeftEdge < sprite2LeftEdge)
+	{
+		collided = false;
+	}
+	if (sprite1RightEdge < sprite2RightEdge)
+	{
+		collided = false;
+	}
+
+	return collided;
 }

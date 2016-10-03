@@ -39,12 +39,11 @@ public:
 	int SpriteDirection;
 	int XVel;
 	int YVel;
-	property Rectangle BoundingArea;
-	property int BoundsAction;
 	property bool IsAlive;
+	property double ProportionReduction;
 
 public:
-	Sprite(Graphics^ startCanvas, array<String^>^ startFileNames, int startNFrames, Rectangle startBoundingArea);
+	Sprite(Graphics^ startCanvas, array<String^>^ startFileNames, int startNFrames);
 	void draw();
 	void move();
 	void erase(Color eraseColour);
@@ -52,7 +51,7 @@ public:
 	void die();
 	void bounce();
 	void stop();
-	void wrap();
 	bool IsLegalMove(TileMap^ tileMap);
+	bool CollidedWithMe(Sprite^ sprite);
 };
 

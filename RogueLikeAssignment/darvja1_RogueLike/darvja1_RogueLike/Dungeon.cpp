@@ -32,15 +32,24 @@ void Dungeon::clearDungeon()
 
 void Dungeon::makeRoom()
 {
+	bool spaceAvailable = false;
 	//repeat until space is found
+	while (!spaceAvailable)
+	{
+		int height = rGen->Next(MIN_ROOM_HEIGHT, MAX_ROOM_HEIGHT);
+		int width = rGen->Next(MIN_ROOM_WIDTH, MAX_ROOM_WIDTH);
 
-	int height = rGen->Next(MIN_ROOM_HEIGHT, MAX_ROOM_HEIGHT);
-	int width = rGen->Next(MIN_ROOM_WIDTH, MAX_ROOM_WIDTH);
+		int leftCol = rGen->Next(MAP_COLS);
+		int topRow = rGen->Next(MAP_ROWS);
 
-	int leftCol = rGen->Next(MAP_COLS);
-	int topRow = rGen->Next(MAP_ROWS);
+		//check if area free
 
-	//check if area free
+		for (int i = 0; i < rooms->Length; i++)
+		{
+			
+		}
+	}
+	
 
 	//record room in array
 	
