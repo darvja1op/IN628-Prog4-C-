@@ -5,11 +5,13 @@
 #define MIN_ROOM_WIDTH 5
 #define MAX_ROOM_WIDTH 15
 
+public enum ETileType { DIRT, CORRIDOR, DOOR, FLOOR, WALL };
+
 ref class Dungeon
 {
 private:
 	int numRooms;
-	array<int, 2>^ map;
+	array<ETileType, 2>^ cellArray;
 	array<Room^>^ rooms;
 	Random^ rGen;
 public:
@@ -18,5 +20,6 @@ public:
 	void clearDungeon();
 	void makeRoom();
 	void makeCorridor(int room1, int room2);
+	array<int, 2>^ translateArray();
 };
 

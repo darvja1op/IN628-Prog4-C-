@@ -3,8 +3,6 @@
 #include "Tile.h"
 #include "TileMap.h"
 
-public enum ETileType { Dirt, Corridor, Door, Floor, Wall};
-
 Dungeon::Dungeon(Random^ startRGen)
 {
 	rGen = startRGen;
@@ -19,10 +17,10 @@ void Dungeon::makeNewDungeon(int nRooms)
 		makeRoom();
 	}
 
-	for (int r = 0; r < nRooms - 1; r++)
+	/*for (int r = 0; r < nRooms - 1; r++)
 	{
 		makeCorridor(r, r + 1);
-	}
+	}*/
 }
 
 void Dungeon::clearDungeon()
@@ -33,6 +31,9 @@ void Dungeon::clearDungeon()
 void Dungeon::makeRoom()
 {
 	bool spaceAvailable = false;
+	int roomIndex = 0;
+	Room^ newRoom;
+
 	//repeat until space is found
 	while (!spaceAvailable)
 	{
@@ -42,20 +43,54 @@ void Dungeon::makeRoom()
 		int leftCol = rGen->Next(MAP_COLS);
 		int topRow = rGen->Next(MAP_ROWS);
 
-		//check if area free
+		newRoom = gcnew Room(leftCol, topRow, width, height);
 
-		for (int i = 0; i < rooms->Length; i++)
-		{
-			
-		}
+		//check if area free
+		spaceAvailable = true;
 	}
-	
 
 	//record room in array
-	
+	rooms[roomIndex] = newRoom;
+
+	for (int column = newRoom->leftCol; column < (newRoom->leftCol + newRoom->height); column++)
+	{
+		for (int row = newRoom->topRow; row < (newRoom->topRow + newRoom->width); row++)
+		{
+			cellArray[column, row] = ETileType::FLOOR;
+		}
+	}
 }
 
 void Dungeon::makeCorridor(int room1, int room2)
 {
 
+}
+
+array<int, 2>^ Dungeon::translateArray()
+{
+	array<int, 2>^ translatedArray = gcnew array<int, 2>(MAP_COLS,MAP_ROWS);
+	for (int column = 0; column < MAP_COLS; column++)
+	{
+		for (int row = 0; row < MAP_ROWS; row++)
+		{
+			switch (cellArray[column, row])
+			{
+			case ETileType::DIRT:
+				translatedArray[column, row] = 0;
+				break;
+			case ETileType::FLOOR:
+				translatedArray[column, row] = 1;
+				break;
+			case ETileType::WALL:
+				translatedArray[column, row] = 2;
+				break;
+			case ETileType::DOOR:
+				translatedArray[column, row] = 3;
+				break;
+			case ETileType::CORRIDOR:
+				translatedArray[column, row] = 4;
+				break;
+			}
+		}
+	}
 }

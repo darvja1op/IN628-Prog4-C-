@@ -1,7 +1,7 @@
 #pragma once
 ref class Room
 {
-private:
+public:
 	int leftCol;
 	int topRow;
 	int width;

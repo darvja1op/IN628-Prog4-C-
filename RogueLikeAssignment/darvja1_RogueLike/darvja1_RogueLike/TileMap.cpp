@@ -69,3 +69,8 @@ bool TileMap::isTileWalkable(int col, int row)
 	int currTileIndex = map[col, row];
 	return tileList->isTileWalkable(currTileIndex);
 }
+
+void TileMap::LoadMapFromArray(array<int, 2>^ cellArray)
+{
+	
+}
