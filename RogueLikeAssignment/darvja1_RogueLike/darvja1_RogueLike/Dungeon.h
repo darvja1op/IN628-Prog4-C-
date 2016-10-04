@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Room.h"
+
 #define MIN_ROOM_HEIGHT 5
 #define MAX_ROOM_HEIGHT 15
 #define MIN_ROOM_WIDTH 5

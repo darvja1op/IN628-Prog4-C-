@@ -33,15 +33,19 @@ void Dungeon::makeRoom()
 	bool spaceAvailable = false;
 	int roomIndex = 0;
 	Room^ newRoom;
+	int height;
+	int width;
+	int leftCol;
+	int topRow;
 
 	//repeat until space is found
 	while (!spaceAvailable)
 	{
-		int height = rGen->Next(MIN_ROOM_HEIGHT, MAX_ROOM_HEIGHT);
-		int width = rGen->Next(MIN_ROOM_WIDTH, MAX_ROOM_WIDTH);
+		height = rGen->Next(MIN_ROOM_HEIGHT, MAX_ROOM_HEIGHT);
+		width = rGen->Next(MIN_ROOM_WIDTH, MAX_ROOM_WIDTH);
 
-		int leftCol = rGen->Next(MAP_COLS);
-		int topRow = rGen->Next(MAP_ROWS);
+		leftCol = rGen->Next(MAP_COLS);
+		topRow = rGen->Next(MAP_ROWS);
 
 		newRoom = gcnew Room(leftCol, topRow, width, height);
 
@@ -52,12 +56,39 @@ void Dungeon::makeRoom()
 	//record room in array
 	rooms[roomIndex] = newRoom;
 
+	//filling room with floor tiles
 	for (int column = newRoom->leftCol; column < (newRoom->leftCol + newRoom->height); column++)
 	{
 		for (int row = newRoom->topRow; row < (newRoom->topRow + newRoom->width); row++)
 		{
 			cellArray[column, row] = ETileType::FLOOR;
 		}
+	}
+
+	//filling walls in
+	int column;
+	int row = 0;
+	for (column = newRoom->leftCol; column < (newRoom->leftCol + newRoom->width); column++)
+	{
+		cellArray[column, row] = ETileType::WALL;
+	}
+
+	row = newRoom->topRow + newRoom->height;
+	for (column = newRoom->leftCol; column < (newRoom->leftCol + newRoom->width); column++)
+	{
+		cellArray[column, row] = ETileType::WALL;
+	}
+
+	column = 0;
+	for (row = newRoom->topRow; row < (newRoom->topRow + newRoom->height); row++)
+	{
+		cellArray[column, row] = ETileType::WALL;
+	}
+
+	column = newRoom->leftCol + newRoom->width;
+	for (row = newRoom->topRow; row < (newRoom->topRow + newRoom->height); row++)
+	{
+		cellArray[column, row] = ETileType::WALL;
 	}
 }
 
@@ -93,4 +124,6 @@ array<int, 2>^ Dungeon::translateArray()
 			}
 		}
 	}
+
+	return translatedArray;
 }

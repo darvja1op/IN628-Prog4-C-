@@ -19,7 +19,7 @@ void TileMap::DrawMap()
 	int drawLocY;
 	int currentTileIndex;
 	Bitmap^ currentTileBitmap;
-	Bitmap^ sampleTile = tileList->GetTileBitmap(12);
+	Bitmap^ sampleTile = tileList->GetTileBitmap(0);
 	int tileWidth = sampleTile->Width;
 	int tileHeight = sampleTile->Height;
 
@@ -72,5 +72,11 @@ bool TileMap::isTileWalkable(int col, int row)
 
 void TileMap::LoadMapFromArray(array<int, 2>^ cellArray)
 {
-	
+	for (int column = 0; column < MAP_COLS; column++)
+	{
+		for (int row = 0; row < MAP_ROWS; row++)
+		{
+			map[column, row] = cellArray[column,row];
+		}
+	}
 }
