@@ -78,13 +78,13 @@ void Dungeon::makeRoom(int roomIndex)
 
 	int column;
 	int row;
-	for (column = leftCol; column <= (leftCol + width); column++)
+	for (column = leftCol; column < (leftCol + width); column++)
 	{
 		cellArray[column, topRow] = ETileType::WALL;
 	}
 
 	row = topRow + height;
-	for (column = leftCol; column <= (leftCol + width); column++)
+	for (column = leftCol; column < (leftCol + width); column++)
 	{
 		cellArray[column, row] = ETileType::WALL;
 	}
@@ -129,14 +129,14 @@ void Dungeon::makeCorridor(int room1, int room2)
 	int row;
 	if (room1CentreRow < room2CentreRow)
 	{
-		for (row = room1CentreRow; row < room2CentreRow; row++)
+		for (row = room1CentreRow; row <= room2CentreRow; row++)
 		{
 			cellArray[col, row] = ETileType::CORRIDOR;
 		}
 	}
 	else
 	{
-		for (row = room2CentreRow; row < room1CentreRow; row++)
+		for (row = room2CentreRow; row <= room1CentreRow; row++)
 		{
 			cellArray[col, row] = ETileType::CORRIDOR;
 		}
