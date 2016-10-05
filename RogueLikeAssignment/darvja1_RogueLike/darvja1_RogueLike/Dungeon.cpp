@@ -3,15 +3,13 @@
 Dungeon::Dungeon(Random^ startRGen)
 {
 	rGen = startRGen;
-	
+	cellArray = gcnew array<ETileType, 2>(MAP_COLS, MAP_ROWS);
 }
 
 void Dungeon::makeNewDungeon(int nRooms)
 {
-	clearDungeon();
-
 	rooms = gcnew array<Room^>(nRooms);
-	cellArray = gcnew array<ETileType, 2>(MAP_COLS, MAP_ROWS);
+	clearDungeon();
 
 	for (int room = 0; room < nRooms; room++)
 	{
@@ -26,7 +24,14 @@ void Dungeon::makeNewDungeon(int nRooms)
 
 void Dungeon::clearDungeon()
 {
-	
+	//filling room with dirt tiles
+	for (int column = 0; column < MAP_COLS; column++)
+	{
+		for (int row = 0; row < MAP_ROWS; row++)
+		{
+			cellArray[column, row] = ETileType::DIRT;
+		}
+	}
 }
 
 void Dungeon::makeRoom(int roomIndex)
@@ -46,20 +51,10 @@ void Dungeon::makeRoom(int roomIndex)
 		leftCol = rGen->Next(MAP_COLS - MIN_ROOM_WIDTH);
 		topRow = rGen->Next(MAP_ROWS - MIN_ROOM_HEIGHT);
 
-		//ensure no room falls off the edge of the map
-		if ((width + leftCol) > MAP_COLS)
-		{
-			width = MAP_COLS - leftCol - 1;
-		}
-		if ((height + topRow) > MAP_ROWS)
-		{
-			height = MAP_ROWS - topRow - 1;
-		}
-
 		newRoom = gcnew Room(leftCol, topRow, width, height);
 
 		//check if area free
-		spaceAvailable = true;
+		spaceAvailable = checkSpace(newRoom);
 	}
 
 	//record room in array
@@ -176,4 +171,32 @@ array<int, 2>^ Dungeon::translateArray()
 	}
 
 	return translatedArray;
+}
+
+bool Dungeon::checkSpace(Room^ newRoom)
+{
+	bool spaceAvailable = true;
+
+	if ((newRoom->width + newRoom->leftCol) >= MAP_COLS)
+	{
+		return false;
+	}
+
+	if ((newRoom->height + newRoom->topRow) >= MAP_ROWS)
+	{
+		return false;
+	}
+
+	for (int col = newRoom->leftCol; col < (newRoom->width + newRoom->leftCol); col++)
+	{
+		for (int row = newRoom->topRow; row < (newRoom->height + newRoom->topRow); row++)
+		{
+			if (cellArray[col, row] != ETileType::DIRT)
+			{
+				return false;
+			}
+		}
+	}
+
+	return spaceAvailable;
 }

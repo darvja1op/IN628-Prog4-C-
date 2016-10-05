@@ -14,8 +14,8 @@ using namespace System::Drawing;
 #define MIN_ROOM_WIDTH 5
 #define MAX_ROOM_WIDTH 15
 
-#define MAP_COLS 40
-#define MAP_ROWS 25
+#define MAP_COLS 50
+#define MAP_ROWS 38
 
 public enum ETileType { DIRT, CORRIDOR, DOOR, FLOOR, WALL };
 
@@ -34,5 +34,6 @@ public:
 	void makeRoom(int roomIndex);
 	void makeCorridor(int room1, int room2);
 	array<int, 2>^ translateArray();
+	bool checkSpace(Room^ newRoom);
 };
 
