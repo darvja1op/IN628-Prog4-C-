@@ -15,13 +15,13 @@ void Dungeon::makeNewDungeon(int nRooms)
 
 	for (int room = 0; room < nRooms; room++)
 	{
-		makeRoom();
+		makeRoom(room);
 	}
 
-	/*for (int r = 0; r < nRooms - 1; r++)
+	for (int r = 0; r < nRooms - 1; r++)
 	{
 		makeCorridor(r, r + 1);
-	}*/
+	}
 }
 
 void Dungeon::clearDungeon()
@@ -29,10 +29,9 @@ void Dungeon::clearDungeon()
 	
 }
 
-void Dungeon::makeRoom()
+void Dungeon::makeRoom(int roomIndex)
 {
 	bool spaceAvailable = false;
-	int roomIndex = 0;
 	int height;
 	int width;
 	int leftCol;
@@ -41,16 +40,21 @@ void Dungeon::makeRoom()
 	//repeat until space is found
 	while (!spaceAvailable)
 	{
-		//height = rGen->Next(MIN_ROOM_HEIGHT, MAX_ROOM_HEIGHT);
-		//width = rGen->Next(MIN_ROOM_WIDTH, MAX_ROOM_WIDTH);
+		height = rGen->Next(MIN_ROOM_HEIGHT, MAX_ROOM_HEIGHT);
+		width = rGen->Next(MIN_ROOM_WIDTH, MAX_ROOM_WIDTH);
 
-		//leftCol = rGen->Next(MAP_COLS);
-		//topRow = rGen->Next(MAP_ROWS);
+		leftCol = rGen->Next(MAP_COLS - MIN_ROOM_WIDTH);
+		topRow = rGen->Next(MAP_ROWS - MIN_ROOM_HEIGHT);
 
-		height = 4;
-		width = 4;
-		leftCol = 4;
-		topRow = 4;
+		//ensure no room falls off the edge of the map
+		if ((width + leftCol) > MAP_COLS)
+		{
+			width = MAP_COLS - leftCol - 1;
+		}
+		if ((height + topRow) > MAP_ROWS)
+		{
+			height = MAP_ROWS - topRow - 1;
+		}
 
 		newRoom = gcnew Room(leftCol, topRow, width, height);
 
@@ -62,9 +66,9 @@ void Dungeon::makeRoom()
 	rooms[roomIndex] = newRoom;
 
 	//filling room with floor tiles
-	for (int column = leftCol; column < (leftCol + height); column++)
+	for (int column = leftCol; column < (leftCol + width); column++)
 	{
-		for (int row = topRow; row < (topRow + width); row++)
+		for (int row = topRow; row < (topRow + height); row++)
 		{
 			cellArray[column, row] = ETileType::FLOOR;
 		}
@@ -72,7 +76,6 @@ void Dungeon::makeRoom()
 
 	//filling walls in
 
-	//top wall 
 	int column;
 	int row;
 	for (column = leftCol; column < (leftCol + width); column++)
@@ -100,7 +103,45 @@ void Dungeon::makeRoom()
 
 void Dungeon::makeCorridor(int room1, int room2)
 {
+	int room1CentreCol = (rooms[room1]->width / 2) + rooms[room1]->leftCol;
+	int room1CentreRow = (rooms[room1]->height / 2) + rooms[room1]->topRow;
 
+	int room2CentreCol = (rooms[room2]->width / 2) + rooms[room2]->leftCol;
+	int room2CentreRow = (rooms[room2]->height / 2) + rooms[room2]->topRow;;
+
+	if (room1CentreCol < room2CentreCol)
+	{
+		for (int i = room1CentreCol; i < room2CentreCol; i++)
+		{
+			cellArray[i, room1CentreRow] = ETileType::CORRIDOR;
+		}
+	}
+	else
+	{
+		for (int i = room2CentreCol; i < room1CentreCol; i++)
+		{
+			cellArray[i, room2CentreRow] = ETileType::CORRIDOR;
+		}
+	}
+
+	if (room1CentreRow < room2CentreRow)
+	{
+		for (int i = room1CentreRow; i < room2CentreRow; i++)
+		{
+			cellArray[room1CentreCol, i] = ETileType::CORRIDOR;
+		}
+	}
+	else
+	{
+		for (int i = room2CentreRow; i < room1CentreRow; i++)
+		{
+			cellArray[room2CentreCol, i] = ETileType::CORRIDOR;
+		}
+	}
+
+	//place door for testing
+	cellArray[room1CentreCol, room1CentreRow] = ETileType::DOOR;
+	cellArray[room2CentreCol, room2CentreRow] = ETileType::DOOR;
 }
 
 array<int, 2>^ Dungeon::translateArray()

@@ -2,8 +2,8 @@
 
 #include "TileList.h"
 
-#define MAP_COLS 16
-#define MAP_ROWS 12
+#define MAP_COLS 40
+#define MAP_ROWS 25
 
 using namespace System;
 using namespace System::ComponentModel;

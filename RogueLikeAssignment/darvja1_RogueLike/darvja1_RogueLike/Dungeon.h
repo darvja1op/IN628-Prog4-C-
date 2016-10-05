@@ -14,8 +14,8 @@ using namespace System::Drawing;
 #define MIN_ROOM_WIDTH 5
 #define MAX_ROOM_WIDTH 15
 
-#define MAP_COLS 16
-#define MAP_ROWS 12
+#define MAP_COLS 40
+#define MAP_ROWS 25
 
 public enum ETileType { DIRT, CORRIDOR, DOOR, FLOOR, WALL };
 
@@ -31,7 +31,7 @@ public:
 	Dungeon(Random^ startRGen);
 	void makeNewDungeon(int numrooms);
 	void clearDungeon();
-	void makeRoom();
+	void makeRoom(int roomIndex);
 	void makeCorridor(int room1, int room2);
 	array<int, 2>^ translateArray();
 };

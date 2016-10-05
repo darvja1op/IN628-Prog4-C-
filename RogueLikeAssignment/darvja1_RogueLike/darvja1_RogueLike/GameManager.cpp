@@ -1,6 +1,6 @@
 #include "GameManager.h"
 
-#define NUM_ROOMS 1
+#define NUM_ROOMS 2
 
 GameManager::GameManager(Random^ startRGen, Graphics^ startOffScreenCanvas, Graphics^ startMainCanvas, Bitmap^ startBitmap)
 {
