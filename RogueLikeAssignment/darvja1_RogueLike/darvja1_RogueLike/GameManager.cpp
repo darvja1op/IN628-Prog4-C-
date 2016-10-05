@@ -1,7 +1,5 @@
 #include "GameManager.h"
 
-#define NUM_ROOMS 2
-
 GameManager::GameManager(Random^ startRGen, Graphics^ startOffScreenCanvas, Graphics^ startMainCanvas, Bitmap^ startBitmap)
 {
 	dungeon = gcnew Dungeon(startRGen);

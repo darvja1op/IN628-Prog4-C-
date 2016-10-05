@@ -10,6 +10,8 @@ using namespace System::Drawing;
 #include "Dungeon.h"
 #include "TileMap.h"
 
+#define NUM_ROOMS 3
+
 ref class GameManager
 {
 private:
