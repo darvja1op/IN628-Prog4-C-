@@ -19,7 +19,7 @@ private:
 	Graphics^ offScreenCanvas;
 	Graphics^ mainCanvas;
 public:
-	GameManager(Random^ startRGen, Graphics^ offScreenCanvas, Graphics^ mainCanvas);
+	GameManager(Random^ startRGen, Graphics^ startOffScreenCanvas, Graphics^ startMainCanvas, Bitmap^ startBitmap);
 	void runGame();
 	void loadDungeon();
 };

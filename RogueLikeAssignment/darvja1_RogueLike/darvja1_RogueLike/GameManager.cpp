@@ -2,9 +2,12 @@
 
 #define NUM_ROOMS 1
 
-GameManager::GameManager(Random^ startRGen, Graphics^ startOffScreenCanvas, Graphics^ startMainCanvas)
+GameManager::GameManager(Random^ startRGen, Graphics^ startOffScreenCanvas, Graphics^ startMainCanvas, Bitmap^ startBitmap)
 {
 	dungeon = gcnew Dungeon(startRGen);
+	offScreenCanvas = startOffScreenCanvas;
+	mainCanvas = startMainCanvas;
+	offScreenBitmap = startBitmap;
 
 	Bitmap^ corridorBitmap = gcnew Bitmap("images/Corridor.jpg");
 	Bitmap^ dirtBitmap = gcnew Bitmap("images/Dirt.jpg");

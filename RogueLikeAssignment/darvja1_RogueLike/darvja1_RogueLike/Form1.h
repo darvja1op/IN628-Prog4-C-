@@ -92,9 +92,11 @@ namespace darvja1_RogueLike {
 				 offScreenCanvas = Graphics::FromImage(offScreenBitmap);
 				 rGen = gcnew Random();
 
-				 gameManager = gcnew GameManager(rGen, offScreenCanvas, mainCanvas);
+				 gameManager = gcnew GameManager(rGen, offScreenCanvas, mainCanvas, offScreenBitmap);
 
 				 gameManager->loadDungeon();
+
+				 timer1->Enabled = true;
 	}
 	private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e) 
 	{
