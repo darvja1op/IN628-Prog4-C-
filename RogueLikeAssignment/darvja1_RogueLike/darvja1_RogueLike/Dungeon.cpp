@@ -66,9 +66,9 @@ void Dungeon::makeRoom(int roomIndex)
 	rooms[roomIndex] = newRoom;
 
 	//filling room with floor tiles
-	for (int column = leftCol; column < (leftCol + width); column++)
+	for (int column = leftCol; column <= (leftCol + width); column++)
 	{
-		for (int row = topRow; row < (topRow + height); row++)
+		for (int row = topRow; row <= (topRow + height); row++)
 		{
 			cellArray[column, row] = ETileType::FLOOR;
 		}
@@ -78,24 +78,24 @@ void Dungeon::makeRoom(int roomIndex)
 
 	int column;
 	int row;
-	for (column = leftCol; column < (leftCol + width); column++)
+	for (column = leftCol; column <= (leftCol + width); column++)
 	{
 		cellArray[column, topRow] = ETileType::WALL;
 	}
 
 	row = topRow + height;
-	for (column = leftCol; column < (leftCol + width); column++)
+	for (column = leftCol; column <= (leftCol + width); column++)
 	{
 		cellArray[column, row] = ETileType::WALL;
 	}
 
-	for (row = topRow; row < (topRow + height); row++)
+	for (row = topRow; row <= (topRow + height); row++)
 	{
 		cellArray[leftCol, row] = ETileType::WALL;
 	}
 
 	column = leftCol + width;
-	for (row = topRow; row < (topRow + height); row++)
+	for (row = topRow; row <= (topRow + height); row++)
 	{
 		cellArray[column, row] = ETileType::WALL;
 	}
@@ -109,33 +109,36 @@ void Dungeon::makeCorridor(int room1, int room2)
 	int room2CentreCol = (rooms[room2]->width / 2) + rooms[room2]->leftCol;
 	int room2CentreRow = (rooms[room2]->height / 2) + rooms[room2]->topRow;;
 
+	int col;
 	if (room1CentreCol < room2CentreCol)
 	{
-		for (int i = room1CentreCol; i < room2CentreCol; i++)
+		for (col = room1CentreCol; col < room2CentreCol; col++)
 		{
-			cellArray[i, room1CentreRow] = ETileType::CORRIDOR;
+			cellArray[col, room1CentreRow] = ETileType::CORRIDOR;
 		}
 	}
 	else
 	{
-		for (int i = room2CentreCol; i < room1CentreCol; i++)
+		for (col = room2CentreCol; col < room1CentreCol; col++)
 		{
-			cellArray[i, room2CentreRow] = ETileType::CORRIDOR;
+			cellArray[col, room2CentreRow] = ETileType::CORRIDOR;
 		}
 	}
 
+
+	int row;
 	if (room1CentreRow < room2CentreRow)
 	{
-		for (int i = room1CentreRow; i < room2CentreRow; i++)
+		for (row = room1CentreRow; row < room2CentreRow; row++)
 		{
-			cellArray[room1CentreCol, i] = ETileType::CORRIDOR;
+			cellArray[col, row] = ETileType::CORRIDOR;
 		}
 	}
 	else
 	{
-		for (int i = room2CentreRow; i < room1CentreRow; i++)
+		for (row = room2CentreRow; row < room1CentreRow; row++)
 		{
-			cellArray[room2CentreCol, i] = ETileType::CORRIDOR;
+			cellArray[col, row] = ETileType::CORRIDOR;
 		}
 	}
 
