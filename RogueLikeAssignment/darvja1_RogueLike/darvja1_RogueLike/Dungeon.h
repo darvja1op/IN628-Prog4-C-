@@ -1,11 +1,21 @@
 #pragma once
 
+using namespace System;
+using namespace System::ComponentModel;
+using namespace System::Collections;
+using namespace System::Windows::Forms;
+using namespace System::Data;
+using namespace System::Drawing;
+
 #include "Room.h"
 
 #define MIN_ROOM_HEIGHT 5
 #define MAX_ROOM_HEIGHT 15
 #define MIN_ROOM_WIDTH 5
 #define MAX_ROOM_WIDTH 15
+
+#define MAP_COLS 16
+#define MAP_ROWS 12
 
 public enum ETileType { DIRT, CORRIDOR, DOOR, FLOOR, WALL };
 
@@ -16,6 +26,7 @@ private:
 	array<ETileType, 2>^ cellArray;
 	array<Room^>^ rooms;
 	Random^ rGen;
+	Room^ newRoom;
 public:
 	Dungeon(Random^ startRGen);
 	void makeNewDungeon(int numrooms);

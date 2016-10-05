@@ -6,11 +6,11 @@ GameManager::GameManager(Random^ startRGen, Graphics^ startOffScreenCanvas, Grap
 {
 	dungeon = gcnew Dungeon(startRGen);
 
-	Bitmap^ corridorBitmap = gcnew Bitmap("images/Corridor.bmp");
+	Bitmap^ corridorBitmap = gcnew Bitmap("images/Corridor.jpg");
 	Bitmap^ dirtBitmap = gcnew Bitmap("images/Dirt.jpg");
-	Bitmap^ doorBitmap = gcnew Bitmap("images/Door.bmp");
-	Bitmap^ floorBitmap = gcnew Bitmap("images/Floor.bmp");
-	Bitmap^ wallBitmap = gcnew Bitmap("images/Wall.bmp");
+	Bitmap^ doorBitmap = gcnew Bitmap("images/Door.jpg");
+	Bitmap^ floorBitmap = gcnew Bitmap("images/Floor.jpg");
+	Bitmap^ wallBitmap = gcnew Bitmap("images/Wall.jpg");
 
 	Tile^ corridorTile = gcnew Tile(corridorBitmap, true);
 	Tile^ dirtTile = gcnew Tile(dirtBitmap, false);

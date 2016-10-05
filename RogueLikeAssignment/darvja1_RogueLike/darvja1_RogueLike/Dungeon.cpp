@@ -1,16 +1,17 @@
 #include "Dungeon.h"
-#include "Room.h"
-#include "Tile.h"
-#include "TileMap.h"
 
 Dungeon::Dungeon(Random^ startRGen)
 {
 	rGen = startRGen;
+	
 }
 
 void Dungeon::makeNewDungeon(int nRooms)
 {
 	clearDungeon();
+
+	rooms = gcnew array<Room^>(nRooms);
+	cellArray = gcnew array<ETileType, 2>(MAP_COLS, MAP_ROWS);
 
 	for (int room = 0; room < nRooms; room++)
 	{
@@ -32,7 +33,6 @@ void Dungeon::makeRoom()
 {
 	bool spaceAvailable = false;
 	int roomIndex = 0;
-	Room^ newRoom;
 	int height;
 	int width;
 	int leftCol;
@@ -57,9 +57,9 @@ void Dungeon::makeRoom()
 	rooms[roomIndex] = newRoom;
 
 	//filling room with floor tiles
-	for (int column = newRoom->leftCol; column < (newRoom->leftCol + newRoom->height); column++)
+	for (int column = leftCol; column < (leftCol + height); column++)
 	{
-		for (int row = newRoom->topRow; row < (newRoom->topRow + newRoom->width); row++)
+		for (int row = topRow; row < (topRow + width); row++)
 		{
 			cellArray[column, row] = ETileType::FLOOR;
 		}
