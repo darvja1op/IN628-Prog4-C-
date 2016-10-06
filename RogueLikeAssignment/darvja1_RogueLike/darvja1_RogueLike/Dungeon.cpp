@@ -70,7 +70,6 @@ void Dungeon::makeRoom(int roomIndex)
 	}
 
 	//filling walls in
-
 	int column;
 	int row;
 	for (column = leftCol; column < (leftCol + width); column++)
@@ -104,42 +103,93 @@ void Dungeon::makeCorridor(int room1, int room2)
 	int room2CentreCol = (rooms[room2]->width / 2) + rooms[room2]->leftCol;
 	int room2CentreRow = (rooms[room2]->height / 2) + rooms[room2]->topRow;;
 
+	//horizontal corridor
 	int col;
 	if (room1CentreCol < room2CentreCol)
 	{
 		for (col = room1CentreCol; col < room2CentreCol; col++)
 		{
-			cellArray[col, room1CentreRow] = ETileType::CORRIDOR;
+			switch (cellArray[col, room1CentreRow])
+			{
+			case ETileType::WALL:
+				cellArray[col, room1CentreRow] = ETileType::DOOR;
+				break;
+			case ETileType::FLOOR:
+				cellArray[col, room1CentreRow] = ETileType::FLOOR;
+				break;
+			default:
+				cellArray[col, room1CentreRow] = ETileType::CORRIDOR;
+				break;
+			}
 		}
 	}
 	else
 	{
 		for (col = room2CentreCol; col < room1CentreCol; col++)
 		{
-			cellArray[col, room2CentreRow] = ETileType::CORRIDOR;
+			switch (cellArray[col, room2CentreRow])
+			{
+			case ETileType::WALL:
+				cellArray[col, room2CentreRow] = ETileType::DOOR;
+				break;
+			case ETileType::FLOOR:
+				cellArray[col, room2CentreRow] = ETileType::FLOOR;
+				break;
+			case ETileType::DIRT:
+				cellArray[col, room2CentreRow] = ETileType::CORRIDOR;
+				break;
+			case ETileType::CORRIDOR:
+				cellArray[col, room2CentreRow] = ETileType::CORRIDOR;
+				break;
+			case ETileType::DOOR:
+				cellArray[col, room2CentreRow] = ETileType::DOOR;
+				break;
+			}
 		}
 	}
 
-
+	//vertical corridor
 	int row;
 	if (room1CentreRow < room2CentreRow)
 	{
-		for (row = room1CentreRow; row <= room2CentreRow; row++)
+		for (row = room1CentreRow; row < room2CentreRow; row++)
 		{
-			cellArray[col, row] = ETileType::CORRIDOR;
+			switch (cellArray[col, row])
+			{
+			case ETileType::WALL:
+				cellArray[col, row] = ETileType::DOOR;
+				break;
+			case ETileType::FLOOR:
+				cellArray[col, row] = ETileType::FLOOR;
+				break;
+			default:
+				cellArray[col, row] = ETileType::CORRIDOR;
+				break;
+			}
 		}
 	}
 	else
 	{
-		for (row = room2CentreRow; row <= room1CentreRow; row++)
+		for (row = room2CentreRow; row < room1CentreRow; row++)
 		{
-			cellArray[col, row] = ETileType::CORRIDOR;
+			switch (cellArray[col, row])
+			{
+			case ETileType::WALL:
+				cellArray[col, row] = ETileType::DOOR;
+				break;
+			case ETileType::FLOOR:
+				cellArray[col, row] = ETileType::FLOOR;
+				break;
+			default:
+				cellArray[col, row] = ETileType::CORRIDOR;
+				break;
+			}
 		}
 	}
 
 	//place door for testing
-	cellArray[room1CentreCol, room1CentreRow] = ETileType::DOOR;
-	cellArray[room2CentreCol, room2CentreRow] = ETileType::DOOR;
+	//cellArray[room1CentreCol, room1CentreRow] = ETileType::DOOR;
+	//cellArray[room2CentreCol, room2CentreRow] = ETileType::DOOR;
 }
 
 array<int, 2>^ Dungeon::translateArray()
