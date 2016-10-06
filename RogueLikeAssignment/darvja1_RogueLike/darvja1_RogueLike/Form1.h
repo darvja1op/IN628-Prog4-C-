@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameManager.h"
+#include "Hero.h"
 
 namespace darvja1_RogueLike {
 
@@ -47,6 +48,7 @@ namespace darvja1_RogueLike {
 	private: System::Windows::Forms::Panel^  panel1;
 			 Graphics^ offScreenCanvas;
 			 Bitmap^ offScreenBitmap;
+			 Hero^ chickenHero;
 
 
 #pragma region Windows Form Designer generated code
@@ -81,6 +83,7 @@ namespace darvja1_RogueLike {
 			this->Name = L"Form1";
 			this->Text = L"Form1";
 			this->Load += gcnew System::EventHandler(this, &Form1::Form1_Load);
+			this->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &Form1::Form1_KeyDown);
 			this->ResumeLayout(false);
 
 		}
@@ -92,7 +95,18 @@ namespace darvja1_RogueLike {
 				 offScreenCanvas = Graphics::FromImage(offScreenBitmap);
 				 rGen = gcnew Random();
 
-				 gameManager = gcnew GameManager(rGen, offScreenCanvas, mainCanvas, offScreenBitmap);
+				 int framesInChickenSheet = 8;
+				 int directions = 4;
+
+				 array<String^>^ chickenImages = gcnew array<String^>(directions);
+				 chickenImages[EAST] = "images/Chicken East.bmp";
+				 chickenImages[NORTH] = "images/Chicken North.bmp";
+				 chickenImages[SOUTH] = "images/Chicken South.bmp";
+				 chickenImages[WEST] = "images/Chicken West.bmp";
+
+				 chickenHero = gcnew Hero(offScreenCanvas, chickenImages, framesInChickenSheet, 100);
+
+				 gameManager = gcnew GameManager(rGen, offScreenCanvas, mainCanvas, offScreenBitmap, chickenHero);
 
 				 gameManager->loadDungeon();
 
@@ -101,6 +115,25 @@ namespace darvja1_RogueLike {
 	private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e) 
 	{
 				 gameManager->runGame();
+				 chickenHero->draw();
 	}
-	};
+	private: System::Void Form1_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) 
+	{
+				 switch (e->KeyData)
+				 {
+				 case Keys::Left:
+					 chickenHero->SpriteDirection = WEST;
+					 break;
+				 case Keys::Right:
+					 chickenHero->SpriteDirection = EAST;
+					 break;
+				 case Keys::Up:
+					 chickenHero->SpriteDirection = NORTH;
+					 break;
+				 case Keys::Down:
+					 chickenHero->SpriteDirection = SOUTH;
+					 break;
+				 }
+	}
+};
 }

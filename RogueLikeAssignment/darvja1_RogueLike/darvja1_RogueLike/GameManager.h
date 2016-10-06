@@ -9,6 +9,7 @@ using namespace System::Drawing;
 
 #include "Dungeon.h"
 #include "TileMap.h"
+#include "Hero.h"
 
 #define NUM_ROOMS 4
 
@@ -20,8 +21,9 @@ private:
 	Bitmap^ offScreenBitmap;
 	Graphics^ offScreenCanvas;
 	Graphics^ mainCanvas;
+	Hero^ chickenHero;
 public:
-	GameManager(Random^ startRGen, Graphics^ startOffScreenCanvas, Graphics^ startMainCanvas, Bitmap^ startBitmap);
+	GameManager(Random^ startRGen, Graphics^ startOffScreenCanvas, Graphics^ startMainCanvas, Bitmap^ startBitmap, Hero^ startHero);
 	void runGame();
 	void loadDungeon();
 };

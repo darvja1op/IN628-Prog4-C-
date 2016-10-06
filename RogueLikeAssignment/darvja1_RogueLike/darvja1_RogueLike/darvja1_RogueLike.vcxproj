@@ -81,6 +81,7 @@
     <ClCompile Include="Dungeon.cpp" />
     <ClCompile Include="Form1.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="Hero.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Tile.cpp" />
@@ -93,6 +94,7 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="Hero.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Tile.h" />

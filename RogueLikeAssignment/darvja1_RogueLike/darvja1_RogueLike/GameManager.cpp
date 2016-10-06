@@ -1,12 +1,14 @@
 #include "GameManager.h"
 
-GameManager::GameManager(Random^ startRGen, Graphics^ startOffScreenCanvas, Graphics^ startMainCanvas, Bitmap^ startBitmap)
+GameManager::GameManager(Random^ startRGen, Graphics^ startOffScreenCanvas, Graphics^ startMainCanvas, Bitmap^ startBitmap, Hero^ startHero)
 {
 	dungeon = gcnew Dungeon(startRGen);
 	offScreenCanvas = startOffScreenCanvas;
 	mainCanvas = startMainCanvas;
 	offScreenBitmap = startBitmap;
+	chickenHero = startHero;
 
+	//creating tiles
 	Bitmap^ corridorBitmap = gcnew Bitmap("images/Corridor.jpg");
 	Bitmap^ dirtBitmap = gcnew Bitmap("images/Dirt.jpg");
 	Bitmap^ doorBitmap = gcnew Bitmap("images/Door.jpg");
@@ -32,6 +34,10 @@ GameManager::GameManager(Random^ startRGen, Graphics^ startOffScreenCanvas, Grap
 
 void GameManager::runGame()
 {	
+	if (chickenHero->IsLegalMove(tileMap))
+	{
+		chickenHero->move();
+	}
 	tileMap->DrawMap();
 	mainCanvas->DrawImage(offScreenBitmap, 0, 0);
 }
