@@ -18,12 +18,10 @@ ref class GameManager
 private:
 	Dungeon^ dungeon;
 	TileMap^ tileMap;
-	Bitmap^ offScreenBitmap;
 	Graphics^ offScreenCanvas;
-	Graphics^ mainCanvas;
 	Hero^ chickenHero;
 public:
-	GameManager(Random^ startRGen, Graphics^ startOffScreenCanvas, Graphics^ startMainCanvas, Bitmap^ startBitmap, Hero^ startHero);
+	GameManager(Random^ startRGen, Graphics^ startOffScreenCanvas, Hero^ startHero);
 	void runGame();
 	void loadDungeon();
 };

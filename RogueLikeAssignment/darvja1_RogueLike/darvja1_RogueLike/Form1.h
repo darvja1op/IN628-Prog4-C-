@@ -106,7 +106,7 @@ namespace darvja1_RogueLike {
 
 				 chickenHero = gcnew Hero(offScreenCanvas, chickenImages, framesInChickenSheet, 100);
 
-				 gameManager = gcnew GameManager(rGen, offScreenCanvas, mainCanvas, offScreenBitmap, chickenHero);
+				 gameManager = gcnew GameManager(rGen, offScreenCanvas, chickenHero);
 
 				 gameManager->loadDungeon();
 
@@ -115,7 +115,7 @@ namespace darvja1_RogueLike {
 	private: System::Void timer1_Tick(System::Object^  sender, System::EventArgs^  e) 
 	{
 				 gameManager->runGame();
-				 chickenHero->draw();
+				 mainCanvas->DrawImage(offScreenBitmap, 0, 0);
 	}
 	private: System::Void Form1_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) 
 	{

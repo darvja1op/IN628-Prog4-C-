@@ -1,11 +1,9 @@
 #include "GameManager.h"
 
-GameManager::GameManager(Random^ startRGen, Graphics^ startOffScreenCanvas, Graphics^ startMainCanvas, Bitmap^ startBitmap, Hero^ startHero)
+GameManager::GameManager(Random^ startRGen, Graphics^ startOffScreenCanvas, Hero^ startHero)
 {
 	dungeon = gcnew Dungeon(startRGen);
 	offScreenCanvas = startOffScreenCanvas;
-	mainCanvas = startMainCanvas;
-	offScreenBitmap = startBitmap;
 	chickenHero = startHero;
 
 	//creating tiles
@@ -38,8 +36,8 @@ void GameManager::runGame()
 	{
 		chickenHero->move();
 	}
+	chickenHero->draw();
 	tileMap->DrawMap();
-	mainCanvas->DrawImage(offScreenBitmap, 0, 0);
 }
 
 void GameManager::loadDungeon()
