@@ -30,5 +30,7 @@ public:
 	GameManager(Random^ startRGen, Graphics^ startOffScreenCanvas, Hero^ startHero, Enemy^ enemy);
 	void runGame();
 	void loadDungeon();
+
+	int GetScore() { return treasureScore; }
 };
 

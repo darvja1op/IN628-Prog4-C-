@@ -37,14 +37,18 @@ GameManager::GameManager(Random^ startRGen, Graphics^ startOffScreenCanvas, Hero
 }
 
 void GameManager::runGame()
-{	
+{
+	//if the next move is legal, allow the hero to move
 	if (hero->IsLegalMove(tileMap))
 	{
 		hero->move();
 	}
+
+	//draw the hero and tilemap
 	tileMap->DrawMap();
 	hero->draw();
 
+	//only draw enemies if they are alive
 	if (enemy->IsAlive)
 	{
 		enemy->draw();

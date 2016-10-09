@@ -92,7 +92,7 @@
   <ItemGroup>
     <ClInclude Include="Dungeon.h" />
     <ClInclude Include="Enemy.h" />
-    <ClInclude Include="Form1.h">
+    <ClInclude Include="RogueLike.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="GameManager.h" />
@@ -104,8 +104,8 @@
     <ClInclude Include="TileMap.h" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.h</DependentUpon>
+    <EmbeddedResource Include="RogueLike.resx">
+      <DependentUpon>RogueLike.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

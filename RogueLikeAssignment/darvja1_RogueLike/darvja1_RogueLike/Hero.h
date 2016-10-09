@@ -7,5 +7,6 @@ private:
 	property int health;
 public:
 	Hero(Graphics^ startCanvas, array<String^>^ startFileNames, int startNFrames, int startHealth);
+	int GetHealth() { return health; }
 };
 

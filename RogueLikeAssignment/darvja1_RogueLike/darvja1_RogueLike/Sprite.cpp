@@ -79,6 +79,7 @@ void Sprite::stop()
 
 bool Sprite::IsLegalMove(TileMap^ tileMap)
 {
+	//method determines if the Sprite's next move is legal
 	int newxPos = XPos + XVel * velocityDirections[SpriteDirection].X;
 	int newyPos = YPos + YVel * velocityDirections[SpriteDirection].Y;
 
@@ -115,6 +116,7 @@ bool Sprite::IsLegalMove(TileMap^ tileMap)
 
 bool Sprite::CollidedWithMe(Sprite^ otherSprite)
 {
+	//method detects if a collision has occured
 	bool collided = true;
 
 	int sprite1BottomEdge, sprite1TopEdge, sprite1LeftEdge, sprite1RightEdge;

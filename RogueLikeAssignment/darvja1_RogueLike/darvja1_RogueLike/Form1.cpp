@@ -1,4 +1,4 @@
-#include "Form1.h"
+#include "RogueLike.h"
 
 using namespace System;
 using namespace System::Windows::Forms;
