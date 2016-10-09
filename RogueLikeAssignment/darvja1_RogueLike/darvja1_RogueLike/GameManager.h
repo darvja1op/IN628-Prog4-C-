@@ -25,6 +25,7 @@ private:
 	Enemy^ enemy;
 	Random^ rGen;
 	array<Sprite^>^ treasure;
+	int treasureScore;
 public:
 	GameManager(Random^ startRGen, Graphics^ startOffScreenCanvas, Hero^ startHero, Enemy^ enemy);
 	void runGame();

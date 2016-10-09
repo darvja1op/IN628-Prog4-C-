@@ -7,6 +7,8 @@ GameManager::GameManager(Random^ startRGen, Graphics^ startOffScreenCanvas, Hero
 	hero = startHero;
 	enemy = startEnemy;
 	rGen = startRGen;
+
+	treasureScore = 0;
 	
 	treasure = gcnew array<Sprite^>(NUM_GOLD);
 
@@ -42,10 +44,27 @@ void GameManager::runGame()
 	}
 	tileMap->DrawMap();
 	hero->draw();
-	enemy->draw();
+
+	if (enemy->IsAlive)
+	{
+		enemy->draw();
+	}
+	
 	for each (Sprite^ gold in treasure)
 	{
-		gold->draw();
+		//check collision between gold and hero
+		bool hit = gold->CollidedWithMe(hero);
+		
+		if (hit)
+		{
+			gold->IsAlive = false;
+			treasureScore += 100;
+		}
+
+		if (gold->IsAlive)
+		{
+			gold->draw();
+		}
 	}
 }
 
