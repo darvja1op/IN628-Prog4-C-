@@ -36,8 +36,8 @@ void GameManager::runGame()
 	{
 		chickenHero->move();
 	}
-	chickenHero->draw();
 	tileMap->DrawMap();
+	chickenHero->draw();	
 }
 
 void GameManager::loadDungeon()
