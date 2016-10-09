@@ -20,6 +20,7 @@ private:
 	TileMap^ tileMap;
 	Graphics^ offScreenCanvas;
 	Hero^ chickenHero;
+	Random^ rGen;
 public:
 	GameManager(Random^ startRGen, Graphics^ startOffScreenCanvas, Hero^ startHero);
 	void runGame();

@@ -29,8 +29,6 @@ private:
 	array<Point>^ velocityDirections;
 	int nFrames;
 	int currentFrame;
-	int xPos;
-	int yPos;
 	int frameWidth;
 	int frameHeight;
 
@@ -39,6 +37,8 @@ public:
 	int SpriteDirection;
 	int XVel;
 	int YVel;
+	int XPos;
+	int YPos;
 	property bool IsAlive;
 	property double ProportionReduction;
 

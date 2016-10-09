@@ -101,7 +101,7 @@ void Dungeon::makeCorridor(int room1, int room2)
 	int room1CentreRow = (rooms[room1]->height / 2) + rooms[room1]->topRow;
 
 	int room2CentreCol = (rooms[room2]->width / 2) + rooms[room2]->leftCol;
-	int room2CentreRow = (rooms[room2]->height / 2) + rooms[room2]->topRow;;
+	int room2CentreRow = (rooms[room2]->height / 2) + rooms[room2]->topRow;
 
 	//horizontal corridor
 	int col;

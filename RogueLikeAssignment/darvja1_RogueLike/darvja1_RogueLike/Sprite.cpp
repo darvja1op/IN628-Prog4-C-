@@ -23,8 +23,8 @@ Sprite::Sprite(Graphics^ startCanvas, array<String^>^ startFileNames, int startN
 
 	currentFrame = 0;
 	
-	xPos = 62;
-	yPos = 62;
+	XPos = 62;
+	YPos = 62;
 	
 	frameWidth = (spriteSheets[0]->Width / nFrames);
 	frameHeight = spriteSheets[0]->Height;
@@ -42,18 +42,17 @@ void Sprite::draw()
 
 	Bitmap^ currentBitmap = spriteSheets[SpriteDirection];
 
-	canvas->DrawImage(currentBitmap, xPos, yPos, drawRect, GraphicsUnit::Pixel);
-	Application::DoEvents();
+	canvas->DrawImage(currentBitmap, XPos, YPos, drawRect, GraphicsUnit::Pixel);
 }
 void Sprite::move()
 {
-	xPos += XVel * velocityDirections[SpriteDirection].X;
-	yPos += YVel * velocityDirections[SpriteDirection].Y;
+	XPos += XVel * velocityDirections[SpriteDirection].X;
+	YPos += YVel * velocityDirections[SpriteDirection].Y;
 }
 void Sprite::erase(Color eraseColour)
 {
 	SolidBrush^ eraseBrush = gcnew SolidBrush(eraseColour);
-	canvas->FillRectangle(eraseBrush, xPos, yPos, frameWidth, frameHeight);
+	canvas->FillRectangle(eraseBrush, XPos, YPos, frameWidth, frameHeight);
 }
 void Sprite::updateFrame()
 {
@@ -80,8 +79,8 @@ void Sprite::stop()
 
 bool Sprite::IsLegalMove(TileMap^ tileMap)
 {
-	int newxPos = xPos + XVel * velocityDirections[SpriteDirection].X;
-	int newyPos = yPos + YVel * velocityDirections[SpriteDirection].Y;
+	int newxPos = XPos + XVel * velocityDirections[SpriteDirection].X;
+	int newyPos = YPos + YVel * velocityDirections[SpriteDirection].Y;
 
 	int directionCornerX;
 	int directionCornerY;
@@ -121,15 +120,15 @@ bool Sprite::CollidedWithMe(Sprite^ otherSprite)
 	int sprite1BottomEdge, sprite1TopEdge, sprite1LeftEdge, sprite1RightEdge;
 	int sprite2BottomEdge, sprite2TopEdge, sprite2LeftEdge, sprite2RightEdge;
 
-	sprite1BottomEdge = yPos + frameHeight - (frameHeight * ProportionReduction);
-	sprite1TopEdge = yPos + (frameHeight * ProportionReduction);
-	sprite1LeftEdge = xPos + (frameWidth * ProportionReduction);
-	sprite1RightEdge = xPos + frameWidth - (frameWidth * ProportionReduction);
+	sprite1BottomEdge = YPos + frameHeight - (frameHeight * ProportionReduction);
+	sprite1TopEdge = YPos + (frameHeight * ProportionReduction);
+	sprite1LeftEdge = XPos + (frameWidth * ProportionReduction);
+	sprite1RightEdge = XPos + frameWidth - (frameWidth * ProportionReduction);
 
-	sprite2BottomEdge = otherSprite->yPos + frameHeight - (frameHeight * ProportionReduction);
-	sprite2TopEdge = otherSprite->yPos + (frameHeight * ProportionReduction);
-	sprite2LeftEdge = otherSprite->xPos + (frameWidth * ProportionReduction);
-	sprite2RightEdge = otherSprite->xPos + frameWidth - (frameWidth * ProportionReduction);
+	sprite2BottomEdge = otherSprite->YPos + frameHeight - (frameHeight * ProportionReduction);
+	sprite2TopEdge = otherSprite->YPos + (frameHeight * ProportionReduction);
+	sprite2LeftEdge = otherSprite->XPos + (frameWidth * ProportionReduction);
+	sprite2RightEdge = otherSprite->XPos + frameWidth - (frameWidth * ProportionReduction);
 
 	if (sprite1BottomEdge < sprite2BottomEdge)
 	{

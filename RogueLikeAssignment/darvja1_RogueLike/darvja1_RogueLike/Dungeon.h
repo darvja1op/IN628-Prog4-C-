@@ -35,5 +35,7 @@ public:
 	void makeCorridor(int room1, int room2);
 	array<int, 2>^ translateArray();
 	bool checkSpace(Room^ newRoom);
+
+	array<Room^>^ GetRooms() { return rooms; }
 };
 
