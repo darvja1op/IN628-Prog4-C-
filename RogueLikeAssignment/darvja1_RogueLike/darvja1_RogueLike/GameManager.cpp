@@ -1,10 +1,11 @@
 #include "GameManager.h"
 
-GameManager::GameManager(Random^ startRGen, Graphics^ startOffScreenCanvas, Hero^ startHero)
+GameManager::GameManager(Random^ startRGen, Graphics^ startOffScreenCanvas, Hero^ startHero, Enemy^ startEnemy)
 {
 	dungeon = gcnew Dungeon(startRGen);
 	offScreenCanvas = startOffScreenCanvas;
-	chickenHero = startHero;
+	hero = startHero;
+	enemy = startEnemy;
 	rGen = startRGen;
 
 	//creating tiles
@@ -33,12 +34,13 @@ GameManager::GameManager(Random^ startRGen, Graphics^ startOffScreenCanvas, Hero
 
 void GameManager::runGame()
 {	
-	if (chickenHero->IsLegalMove(tileMap))
+	if (hero->IsLegalMove(tileMap))
 	{
-		chickenHero->move();
+		hero->move();
 	}
 	tileMap->DrawMap();
-	chickenHero->draw();	
+	hero->draw();
+	enemy->draw();
 }
 
 void GameManager::loadDungeon()
@@ -59,6 +61,19 @@ void GameManager::loadDungeon()
 	int width = sampleTile->Width;
 	int height = sampleTile->Height;
 
-	chickenHero->XPos = width * heroRoomCentreCol;
-	chickenHero->YPos = width * heroRoomCentreRow;
+	hero->XPos = width * heroRoomCentreCol;
+	hero->YPos = width * heroRoomCentreRow;
+
+	//placing enemy not in same room as hero
+	int enemyRoom = rGen->Next(rooms->Length);
+	while (enemyRoom == heroRoom)
+	{
+		enemyRoom = rGen->Next(rooms->Length);
+	}
+	
+	int enemyRoomCentreCol = (rooms[enemyRoom]->width / 2) + rooms[enemyRoom]->leftCol;
+	int enemyRoomCentreRow = (rooms[enemyRoom]->height / 2) + rooms[enemyRoom]->topRow;
+
+	enemy->XPos = width * enemyRoomCentreCol;
+	enemy->YPos = width * enemyRoomCentreRow;
 }

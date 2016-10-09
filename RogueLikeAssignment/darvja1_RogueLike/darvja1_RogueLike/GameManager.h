@@ -10,6 +10,7 @@ using namespace System::Drawing;
 #include "Dungeon.h"
 #include "TileMap.h"
 #include "Hero.h"
+#include "Enemy.h"
 
 #define NUM_ROOMS 4
 
@@ -19,10 +20,11 @@ private:
 	Dungeon^ dungeon;
 	TileMap^ tileMap;
 	Graphics^ offScreenCanvas;
-	Hero^ chickenHero;
+	Hero^ hero;
+	Enemy^ enemy;
 	Random^ rGen;
 public:
-	GameManager(Random^ startRGen, Graphics^ startOffScreenCanvas, Hero^ startHero);
+	GameManager(Random^ startRGen, Graphics^ startOffScreenCanvas, Hero^ startHero, Enemy^ enemy);
 	void runGame();
 	void loadDungeon();
 };

@@ -2,6 +2,7 @@
 
 #include "GameManager.h"
 #include "Hero.h"
+#include "Enemy.h"
 
 namespace darvja1_RogueLike {
 
@@ -48,7 +49,8 @@ namespace darvja1_RogueLike {
 	private: System::Windows::Forms::Panel^  panel1;
 			 Graphics^ offScreenCanvas;
 			 Bitmap^ offScreenBitmap;
-			 Hero^ chickenHero;
+			 Hero^ hero;
+			 Enemy^ enemy;
 
 
 #pragma region Windows Form Designer generated code
@@ -98,15 +100,23 @@ namespace darvja1_RogueLike {
 				 int framesInChickenSheet = 8;
 				 int directions = 4;
 
-				 array<String^>^ chickenImages = gcnew array<String^>(directions);
-				 chickenImages[EAST] = "images/Chicken East.bmp";
-				 chickenImages[NORTH] = "images/Chicken North.bmp";
-				 chickenImages[SOUTH] = "images/Chicken South.bmp";
-				 chickenImages[WEST] = "images/Chicken West.bmp";
+				 //create hero
+				 array<String^>^ heroImages = gcnew array<String^>(directions);
+				 heroImages[EAST] = "images/Chicken East.bmp";
+				 heroImages[NORTH] = "images/Chicken North.bmp";
+				 heroImages[SOUTH] = "images/Chicken South.bmp";
+				 heroImages[WEST] = "images/Chicken West.bmp";
+				 hero = gcnew Hero(offScreenCanvas, heroImages, framesInChickenSheet, 100);
 
-				 chickenHero = gcnew Hero(offScreenCanvas, chickenImages, framesInChickenSheet, 100);
+				 //create enemy
+				 array<String^>^ enemyImages = gcnew array<String^>(directions);
+				 enemyImages[EAST] = "images/Enemy East.bmp";
+				 enemyImages[NORTH] = "images/Enemy North.bmp";
+				 enemyImages[SOUTH] = "images/Enemy South.bmp";
+				 enemyImages[WEST] = "images/Enemy West.bmp";
+				 enemy = gcnew Enemy(offScreenCanvas, enemyImages, framesInChickenSheet, 100);
 
-				 gameManager = gcnew GameManager(rGen, offScreenCanvas, chickenHero);
+				 gameManager = gcnew GameManager(rGen, offScreenCanvas, hero, enemy);
 
 				 gameManager->loadDungeon();
 
@@ -122,16 +132,16 @@ namespace darvja1_RogueLike {
 				 switch (e->KeyData)
 				 {
 				 case Keys::Left:
-					 chickenHero->SpriteDirection = WEST;
+					 hero->SpriteDirection = WEST;
 					 break;
 				 case Keys::Right:
-					 chickenHero->SpriteDirection = EAST;
+					 hero->SpriteDirection = EAST;
 					 break;
 				 case Keys::Up:
-					 chickenHero->SpriteDirection = NORTH;
+					 hero->SpriteDirection = NORTH;
 					 break;
 				 case Keys::Down:
-					 chickenHero->SpriteDirection = SOUTH;
+					 hero->SpriteDirection = SOUTH;
 					 break;
 				 }
 	}
