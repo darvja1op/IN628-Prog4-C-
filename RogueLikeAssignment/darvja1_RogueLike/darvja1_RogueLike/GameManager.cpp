@@ -7,6 +7,8 @@ GameManager::GameManager(Random^ startRGen, Graphics^ startOffScreenCanvas, Hero
 	hero = startHero;
 	enemy = startEnemy;
 	rGen = startRGen;
+	
+	treasure = gcnew array<Sprite^>(NUM_GOLD);
 
 	//creating tiles
 	Bitmap^ corridorBitmap = gcnew Bitmap("images/Corridor.jpg");
@@ -41,6 +43,10 @@ void GameManager::runGame()
 	tileMap->DrawMap();
 	hero->draw();
 	enemy->draw();
+	for each (Sprite^ gold in treasure)
+	{
+		gold->draw();
+	}
 }
 
 void GameManager::loadDungeon()
@@ -76,4 +82,20 @@ void GameManager::loadDungeon()
 
 	enemy->XPos = width * enemyRoomCentreCol;
 	enemy->YPos = width * enemyRoomCentreRow;
+
+	//placing gold
+	for (int i = 0; i < NUM_GOLD; i++)
+	{
+		array<String^>^ images = { "images/treasure.png", "images/treasure.png", "images/treasure.png", "images/treasure.png" };
+		Sprite^ newGold = gcnew Sprite(offScreenCanvas, images, 1);
+
+		int goldRoom = rGen->Next(rooms->Length);
+		int goldRoomCentreCol = (rooms[goldRoom]->width / 2) + rooms[goldRoom]->leftCol;
+		int goldRoomCentreRow = (rooms[goldRoom]->height / 2) + rooms[goldRoom]->topRow;
+
+		newGold->XPos = width * goldRoomCentreCol;
+		newGold->YPos = width * goldRoomCentreRow;
+
+		treasure[i] = newGold;
+	}
 }

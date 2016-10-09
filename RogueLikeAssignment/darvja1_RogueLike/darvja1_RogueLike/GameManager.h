@@ -13,6 +13,7 @@ using namespace System::Drawing;
 #include "Enemy.h"
 
 #define NUM_ROOMS 4
+#define NUM_GOLD 3
 
 ref class GameManager
 {
@@ -23,6 +24,7 @@ private:
 	Hero^ hero;
 	Enemy^ enemy;
 	Random^ rGen;
+	array<Sprite^>^ treasure;
 public:
 	GameManager(Random^ startRGen, Graphics^ startOffScreenCanvas, Hero^ startHero, Enemy^ enemy);
 	void runGame();
