@@ -1,0 +1,24 @@
+#create Ruby Word collection
+hangman_words = []
+#create Ruby collection for holding guessed letters
+guessed_letters = []
+
+File.foreach( 'hangmanWords.txt' ) do |line|
+  hangman_words.push(line)
+end
+
+game_win = false
+
+#select random word from collection
+selected_word = "bob"
+#split word into char array
+word_split = selected_word.split("")
+
+guessed_letters = ['b','o']
+
+if (word_split & guessed_letters).length == selected_word.length
+  #word guessed correctly
+  game_win = true
+end
+
+puts game_win
